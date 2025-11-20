@@ -14,7 +14,8 @@ namespace ProjectAPI.Controllers.api
         [HttpPost]
         [Route("doctorList")]
         public ExpandoObject DoctorList(RequestModel requestModel)
-        {
+        { 
+
             dynamic response = new ExpandoObject();
             try
             {
@@ -24,7 +25,7 @@ namespace ProjectAPI.Controllers.api
                 var decryptData = CryptoJs.Decrypt(requestModel.request, CryptoJs.key, CryptoJs.iv);
                 Doctor model = JsonConvert.DeserializeObject<Doctor>(decryptData);
                 var list = (from d1 in dbContext.Doctors
-                            //join d3 in dbContext.Departments on d1.DepartmentId equals d3.DepartmentId
+                            join d3 in dbContext.Departments on d1.DepartmentId equals d3.DepartmentId
                             where (model.DoctorId == d1.DoctorId || model.DoctorId == 0) && (model.Status == d1.Status || model.Status == null)
                             orderby d1.DoctorName
                             select new
@@ -38,6 +39,7 @@ namespace ProjectAPI.Controllers.api
                                 d1.Qualification,
                                 d1.DepartmentId,
                                 d1.Department.DepartmentName,
+                                d1.ConsultFee,
                                 d1.UpdatedBy,
                                 d1.UpdatedOn,
                                 d1.CreatedBy,

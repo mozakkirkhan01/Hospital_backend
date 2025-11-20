@@ -57,6 +57,7 @@
         <AssociationConnector Association="InstituteDbModel.FK_Doctor_Doctor" />
         <AssociationConnector Association="InstituteDbModel.FK_Doctor_StaffLogin" />
         <AssociationConnector Association="InstituteDbModel.FK_Doctor_StaffLogin1" />
+        <EntityTypeShape EntityType="InstituteDbModel.Patient" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

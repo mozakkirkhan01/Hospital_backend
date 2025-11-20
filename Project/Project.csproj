@@ -116,6 +116,9 @@
     <Compile Include="PageGroup.cs">
       <DependentUpon>InstituteDb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Patient.cs">
+      <DependentUpon>InstituteDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role.cs">
       <DependentUpon>InstituteDb.tt</DependentUpon>
