@@ -15,6 +15,7 @@ namespace Project
     public partial class Patient
     {
         public int PatientId { get; set; }
+        public string UHIDNo { get; set; }
         public string PatientName { get; set; }
         public byte Gender { get; set; }
         public Nullable<System.DateTime> DateOfBirth { get; set; }
@@ -28,6 +29,8 @@ namespace Project
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
+        public Nullable<byte> BloodGroup { get; set; }
+        public Nullable<byte> MaritalStatus { get; set; }
         public byte Status { get; set; }
     }
 }

@@ -65,7 +65,7 @@ namespace ProjectAPI.Controllers.api
 
         [HttpPost]
         [Route("patientList")]
-        public ExpandoObject PatientdList(RequestModel requestModel)
+        public ExpandoObject PatientList(RequestModel requestModel)
         {
 
             dynamic response = new ExpandoObject();
@@ -82,7 +82,10 @@ namespace ProjectAPI.Controllers.api
                             select new
                             {
                                 d1.PatientId,
+                                d1.UHIDNo,
                                 d1.PatientName,
+                                d1.BloodGroup,
+                                d1.MaritalStatus,
                                 d1.Gender,
                                 d1.DateOfBirth,
                                 d1.Status,

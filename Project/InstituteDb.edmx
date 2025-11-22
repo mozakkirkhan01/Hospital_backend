@@ -182,6 +182,7 @@
             <PropertyRef Name="PatientId" />
           </Key>
           <Property Name="PatientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UHIDNo" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="PatientName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Gender" Type="tinyint" Nullable="false" />
           <Property Name="DateOfBirth" Type="date" />
@@ -195,6 +196,8 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="UpdatedBy" Type="int" />
           <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="BloodGroup" Type="tinyint" />
+          <Property Name="MaritalStatus" Type="tinyint" />
           <Property Name="Status" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
@@ -1678,6 +1681,7 @@
             <PropertyRef Name="PatientId" />
           </Key>
           <Property Name="PatientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UHIDNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="PatientName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="Byte" Nullable="false" />
           <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
@@ -1691,6 +1695,8 @@
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="BloodGroup" Type="Byte" />
+          <Property Name="MaritalStatus" Type="Byte" />
           <Property Name="Status" Type="Byte" Nullable="false" />
         </EntityType>
         </Schema>
@@ -1991,6 +1997,8 @@
             <EntityTypeMapping TypeName="InstituteDbModel.Patient">
               <MappingFragment StoreEntitySet="Patient">
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="BloodGroup" ColumnName="BloodGroup" />
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
@@ -2004,6 +2012,7 @@
                 <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="PatientName" ColumnName="PatientName" />
+                <ScalarProperty Name="UHIDNo" ColumnName="UHIDNo" />
                 <ScalarProperty Name="PatientId" ColumnName="PatientId" />
               </MappingFragment>
             </EntityTypeMapping>
