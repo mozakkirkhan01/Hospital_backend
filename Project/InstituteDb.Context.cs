@@ -47,5 +47,9 @@ namespace Project
         public virtual DbSet<StateMaster> StateMasters { get; set; }
         public virtual DbSet<Doctor> Doctors { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
+        public virtual DbSet<Opd> Opds { get; set; }
+        public virtual DbSet<ServiceCategory> ServiceCategories { get; set; }
+        public virtual DbSet<ServiceCharge> ServiceCharges { get; set; }
+        public virtual DbSet<ServiceSubCategory> ServiceSubCategories { get; set; }
     }
 }

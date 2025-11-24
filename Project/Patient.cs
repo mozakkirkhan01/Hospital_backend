@@ -14,6 +14,12 @@ namespace Project
     
     public partial class Patient
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Patient()
+        {
+            this.Opds = new HashSet<Opd>();
+        }
+    
         public int PatientId { get; set; }
         public string UHIDNo { get; set; }
         public string PatientName { get; set; }
@@ -32,5 +38,8 @@ namespace Project
         public Nullable<byte> BloodGroup { get; set; }
         public Nullable<byte> MaritalStatus { get; set; }
         public byte Status { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Opd> Opds { get; set; }
     }
 }

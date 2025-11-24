@@ -110,6 +110,9 @@
       <DependentUpon>InstituteDb.tt</DependentUpon>
     </Compile>
     <Compile Include="ModalClasses.cs" />
+    <Compile Include="Opd.cs">
+      <DependentUpon>InstituteDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Page.cs">
       <DependentUpon>InstituteDb.tt</DependentUpon>
     </Compile>
@@ -124,6 +127,15 @@
       <DependentUpon>InstituteDb.tt</DependentUpon>
     </Compile>
     <Compile Include="RoleMenu.cs">
+      <DependentUpon>InstituteDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceCategory.cs">
+      <DependentUpon>InstituteDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceCharge.cs">
+      <DependentUpon>InstituteDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceSubCategory.cs">
       <DependentUpon>InstituteDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Staff.cs">

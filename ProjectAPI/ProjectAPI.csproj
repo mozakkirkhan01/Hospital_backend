@@ -262,6 +262,9 @@
     <Compile Include="Controllers\api\PatientController.cs" />
     <Compile Include="Controllers\api\RoleController.cs" />
     <Compile Include="Controllers\api\RoleMenuController.cs" />
+    <Compile Include="Controllers\api\ServiceCategoryController.cs" />
+    <Compile Include="Controllers\api\ServiceChargeController.cs" />
+    <Compile Include="Controllers\api\ServiceSubCategoryController.cs" />
     <Compile Include="Controllers\api\StaffController.cs" />
     <Compile Include="Controllers\api\StaffLoginController.cs" />
     <Compile Include="Controllers\api\StaffLoginRoleController.cs" />

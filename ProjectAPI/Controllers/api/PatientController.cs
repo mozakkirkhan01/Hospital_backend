@@ -21,47 +21,71 @@ namespace ProjectAPI.Controllers.api
                 InstituteDbEntities dbContext = new InstituteDbEntities();
                 string AppKey = HttpContext.Current.Request.Headers["AppKey"];
                 AppData.CheckAppKey(dbContext, AppKey, (byte)KeyFor.Admin);
+
                 var decryptData = CryptoJs.Decrypt(requestModel.request, CryptoJs.key, CryptoJs.iv);
                 Patient model = JsonConvert.DeserializeObject<Patient>(decryptData);
 
-                Patient Patient = null;
+                Patient patient = null;
+
                 if (model.PatientId > 0)
                 {
-                    Patient = dbContext.Patients.Where(x => x.PatientId == model.PatientId).First();
-                    Patient.PatientName = model.PatientName;
-                    Patient.Gender = model.Gender;
-                    Patient.DateOfBirth = model.DateOfBirth;
-                    Patient.Age = model.Age;
-                    Patient.MobileNo = model.MobileNo;
-                    Patient.Email = model.Email;
-                    Patient.Address = model.Address;
-                    Patient.AadharNo = model.AadharNo;
-                    Patient.Status = model.Status;
-                    Patient.JoinDate = model.JoinDate;
-                    Patient.UpdatedBy = model.UpdatedBy;
-                    Patient.UpdatedOn = DateTime.Now;
+                    // Update existing record
+                    patient = dbContext.Patients.FirstOrDefault(x => x.PatientId == model.PatientId);
+                    if (patient != null)
+                    {
+                        patient.PatientName = model.PatientName;
+                        patient.Gender = model.Gender;
+                        patient.DateOfBirth = model.DateOfBirth;
+                        patient.Age = model.Age;
+                        patient.MobileNo = model.MobileNo;
+                        patient.Email = model.Email;
+                        patient.Address = model.Address;
+                        patient.AadharNo = model.AadharNo;
+                        patient.Status = model.Status;
+                        patient.JoinDate = model.JoinDate;
+                        patient.UpdatedBy = model.UpdatedBy;
+                        patient.UpdatedOn = DateTime.Now;
+                    }
                 }
                 else
                 {
-                    Patient = model;
-                    Patient.CreatedOn = DateTime.Now;
-                    Patient.CreatedBy = model.CreatedBy;
+                    patient = model;
+                    patient.CreatedOn = DateTime.Now;
+                    patient.CreatedBy = model.CreatedBy;
+
+                    // ✅ Generate UHIDNo like WIK00001, WIK00002, etc.
+                    var lastPatient = dbContext.Patients
+                                               .OrderByDescending(x => x.PatientId)
+                                               .FirstOrDefault();
+                    int nextNumber = 1;
+                    if (lastPatient != null && !string.IsNullOrEmpty(lastPatient.UHIDNo))
+                    {
+                        // Extract numeric part from last UHIDNo (e.g., WIK00023 → 23)
+                        string lastNumberStr = lastPatient.UHIDNo.Substring(3);
+                        int.TryParse(lastNumberStr, out nextNumber);
+                        nextNumber += 1;
+                    }
+
+                    // Generate new UHIDNo
+                    patient.UHIDNo = "WIK" + nextNumber.ToString("D5");
+
+                    dbContext.Patients.Add(patient);
                 }
 
-                if (Patient.PatientId == 0)
-                    dbContext.Patients.Add(Patient);
                 dbContext.SaveChanges();
                 response.Message = ConstantData.SuccessMessage;
+                response.UHIDNo = patient.UHIDNo; // optional: return generated UHID
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("IX"))
-                    response.Message = "This record is already exist";
+                    response.Message = "This record already exists.";
                 else
                     response.Message = ex.Message;
             }
             return response;
         }
+
 
         [HttpPost]
         [Route("patientList")]

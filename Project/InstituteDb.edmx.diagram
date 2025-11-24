@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="830209b994bd493fa063301e398e63aa" Name="Diagram1">
+      <Diagram DiagramId="830209b994bd493fa063301e398e63aa" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="InstituteDbModel.App" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="InstituteDbModel.Backup" Width="1.5" PointX="5.25" PointY="11.25" />
         <EntityTypeShape EntityType="InstituteDbModel.BedType" Width="1.5" PointX="2.75" PointY="0.75" />
@@ -58,6 +58,14 @@
         <AssociationConnector Association="InstituteDbModel.FK_Doctor_StaffLogin" />
         <AssociationConnector Association="InstituteDbModel.FK_Doctor_StaffLogin1" />
         <EntityTypeShape EntityType="InstituteDbModel.Patient" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="InstituteDbModel.Opd" Width="1.5" PointX="12.75" PointY="12.125" />
+        <AssociationConnector Association="InstituteDbModel.FK_Opd_Doctor" />
+        <AssociationConnector Association="InstituteDbModel.FK_Opd_Patient" />
+        <EntityTypeShape EntityType="InstituteDbModel.ServiceCategory" Width="1.5" PointX="3.375" PointY="7.5" />
+        <EntityTypeShape EntityType="InstituteDbModel.ServiceCharge" Width="1.5" PointX="7.875" PointY="7" />
+        <EntityTypeShape EntityType="InstituteDbModel.ServiceSubCategory" Width="1.5" PointX="5.625" PointY="7.25" />
+        <AssociationConnector Association="InstituteDbModel.FK_ServiceSubCategory_ServiceSubCategory" />
+        <AssociationConnector Association="InstituteDbModel.FK_ServiceCharge_ServiceSubCategory" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
