@@ -22,7 +22,5 @@ namespace Project
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
-    
-        public virtual ServiceSubCategory ServiceSubCategory { get; set; }
     }
 }

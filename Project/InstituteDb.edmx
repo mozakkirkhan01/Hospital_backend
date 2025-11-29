@@ -619,27 +619,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ServiceCharge_ServiceSubCategory">
-          <End Role="ServiceSubCategory" Type="Self.ServiceSubCategory" Multiplicity="1" />
-          <End Role="ServiceCharge" Type="Self.ServiceCharge" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ServiceSubCategory">
-              <PropertyRef Name="ServiceSubCategoryId" />
-            </Principal>
-            <Dependent Role="ServiceCharge">
-              <PropertyRef Name="ServiceSubCategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ServiceSubCategory_ServiceSubCategory">
           <End Role="ServiceCategory" Type="Self.ServiceCategory" Multiplicity="1" />
-          <End Role="ServiceSubCategory" Type="Self.ServiceSubCategory" Multiplicity="0..1" />
+          <End Role="ServiceSubCategory" Type="Self.ServiceSubCategory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ServiceCategory">
               <PropertyRef Name="ServiceCategoryId" />
             </Principal>
             <Dependent Role="ServiceSubCategory">
-              <PropertyRef Name="ServiceSubCategoryId" />
+              <PropertyRef Name="ServiceCategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -882,10 +870,6 @@
             <End Role="StaffLogin" EntitySet="StaffLogin" />
             <End Role="RoleMenu" EntitySet="RoleMenu" />
           </AssociationSet>
-          <AssociationSet Name="FK_ServiceCharge_ServiceSubCategory" Association="Self.FK_ServiceCharge_ServiceSubCategory">
-            <End Role="ServiceSubCategory" EntitySet="ServiceSubCategory" />
-            <End Role="ServiceCharge" EntitySet="ServiceCharge" />
-          </AssociationSet>
           <AssociationSet Name="FK_ServiceSubCategory_ServiceSubCategory" Association="Self.FK_ServiceSubCategory_ServiceSubCategory">
             <End Role="ServiceCategory" EntitySet="ServiceCategory" />
             <End Role="ServiceSubCategory" EntitySet="ServiceSubCategory" />
@@ -1098,11 +1082,7 @@
             <End Role="ServiceCategory" EntitySet="ServiceCategories" />
             <End Role="ServiceSubCategory" EntitySet="ServiceSubCategories" />
           </AssociationSet>
-          <AssociationSet Name="FK_ServiceCharge_ServiceSubCategory" Association="InstituteDbModel.FK_ServiceCharge_ServiceSubCategory">
-            <End Role="ServiceSubCategory" EntitySet="ServiceSubCategories" />
-            <End Role="ServiceCharge" EntitySet="ServiceCharges" />
-          </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="App">
           <Key>
             <PropertyRef Name="AppId" />
@@ -1880,7 +1860,7 @@
           <Property Name="ServiceCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ServiceCategoryName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="ServiceSubCategory" Relationship="InstituteDbModel.FK_ServiceSubCategory_ServiceSubCategory" FromRole="ServiceCategory" ToRole="ServiceSubCategory" />
+          <NavigationProperty Name="ServiceSubCategories" Relationship="InstituteDbModel.FK_ServiceSubCategory_ServiceSubCategory" FromRole="ServiceCategory" ToRole="ServiceSubCategory" />
         </EntityType>
         <EntityType Name="ServiceCharge">
           <Key>
@@ -1894,7 +1874,6 @@
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="ServiceSubCategory" Relationship="InstituteDbModel.FK_ServiceCharge_ServiceSubCategory" FromRole="ServiceCharge" ToRole="ServiceSubCategory" />
         </EntityType>
         <EntityType Name="ServiceSubCategory">
           <Key>
@@ -1905,29 +1884,16 @@
           <Property Name="ServiceSubCategoryName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Byte" Nullable="false" />
           <NavigationProperty Name="ServiceCategory" Relationship="InstituteDbModel.FK_ServiceSubCategory_ServiceSubCategory" FromRole="ServiceSubCategory" ToRole="ServiceCategory" />
-          <NavigationProperty Name="ServiceCharges" Relationship="InstituteDbModel.FK_ServiceCharge_ServiceSubCategory" FromRole="ServiceSubCategory" ToRole="ServiceCharge" />
         </EntityType>
         <Association Name="FK_ServiceSubCategory_ServiceSubCategory">
           <End Type="InstituteDbModel.ServiceCategory" Role="ServiceCategory" Multiplicity="1" />
-          <End Type="InstituteDbModel.ServiceSubCategory" Role="ServiceSubCategory" Multiplicity="0..1" />
+          <End Type="InstituteDbModel.ServiceSubCategory" Role="ServiceSubCategory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ServiceCategory">
               <PropertyRef Name="ServiceCategoryId" />
             </Principal>
             <Dependent Role="ServiceSubCategory">
-              <PropertyRef Name="ServiceSubCategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ServiceCharge_ServiceSubCategory">
-          <End Type="InstituteDbModel.ServiceSubCategory" Role="ServiceSubCategory" Multiplicity="1" />
-          <End Type="InstituteDbModel.ServiceCharge" Role="ServiceCharge" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ServiceSubCategory">
-              <PropertyRef Name="ServiceSubCategoryId" />
-            </Principal>
-            <Dependent Role="ServiceCharge">
-              <PropertyRef Name="ServiceSubCategoryId" />
+              <PropertyRef Name="ServiceCategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

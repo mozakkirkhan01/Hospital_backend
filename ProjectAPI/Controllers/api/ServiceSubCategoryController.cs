@@ -13,7 +13,7 @@ namespace ProjectAPI.Controllers.api
     {
         [HttpPost]
         [Route("saveServiceSubCategory")]
-        public ExpandoObject saveServiceSubCategory(RequestModel requestModel)
+        public ExpandoObject SaveServiceSubCategory(RequestModel requestModel)
         {
             dynamic response = new ExpandoObject();
             try
@@ -28,8 +28,8 @@ namespace ProjectAPI.Controllers.api
                 if (model.ServiceSubCategoryId > 0)
                 {
                     ServiceSubCategory = dbContext.ServiceSubCategories.Where(x => x.ServiceSubCategoryId == model.ServiceSubCategoryId).First();
-                    ServiceSubCategory.ServiceSubCategoryName = model.ServiceSubCategoryName;
                     ServiceSubCategory.ServiceCategoryId = model.ServiceCategoryId;
+                    ServiceSubCategory.ServiceSubCategoryName = model.ServiceSubCategoryName;
                     ServiceSubCategory.Status = model.Status;
                 }
                 else
@@ -53,4 +53,5 @@ namespace ProjectAPI.Controllers.api
         }
 
     }
+
 }
