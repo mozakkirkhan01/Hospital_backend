@@ -53,39 +53,7 @@ namespace ProjectAPI.Controllers.api
 
 
 
-        [HttpPost]
-        [Route("DepartmentList")]
-        public ExpandoObject DepartmentList(RequestModel requestModel)
-        {
-            dynamic response = new ExpandoObject();
-            try
-            {
-                InstituteDbEntities dbContext = new InstituteDbEntities();
-                string AppKey = HttpContext.Current.Request.Headers["AppKey"];
-                AppData.CheckAppKey(dbContext, AppKey, (byte)KeyFor.Admin);
-                var decryptData = CryptoJs.Decrypt(requestModel.request, CryptoJs.key, CryptoJs.iv);
-                Department model = JsonConvert.DeserializeObject<Department>(decryptData);
-
-                var list = (from d1 in dbContext.Departments
-                            where (model.DepartmentId == d1.DepartmentId || model.DepartmentId == 0)
-                            && (model.Status == d1.Status || model.Status == 0)
-                            orderby d1.DepartmentName
-                            select new
-                            {
-                                d1.DepartmentId,
-                                d1.DepartmentName,
-                                d1.Status,
-                            }).ToList();
-
-                response.DepartmentList = list;
-                response.Message = ConstantData.SuccessMessage;
-            }
-            catch (Exception ex)
-            {
-                response.Message = ex.Message;
-            }
-            return response;
-        }
+ 
 
         [HttpPost]
         [Route("serviceCategoryList")]
