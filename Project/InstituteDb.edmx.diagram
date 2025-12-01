@@ -65,6 +65,8 @@
         <EntityTypeShape EntityType="InstituteDbModel.ServiceCharge" Width="1.5" PointX="7.875" PointY="7" />
         <EntityTypeShape EntityType="InstituteDbModel.ServiceSubCategory" Width="1.5" PointX="5.625" PointY="7.375" />
         <AssociationConnector Association="InstituteDbModel.FK_ServiceSubCategory_ServiceSubCategory" />
+        <AssociationConnector Association="InstituteDbModel.FK_ServiceCharge_ServiceCategory" />
+        <AssociationConnector Association="InstituteDbModel.FK_ServiceCharge_ServiceSubCategory" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

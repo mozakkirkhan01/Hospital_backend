@@ -43,10 +43,13 @@ namespace ProjectAPI.Controllers.api
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("IX"))
-                    response.Message = "This record is already exist";
+                string errorMessage = ex.InnerException?.InnerException?.Message ?? ex.Message;
+                if (errorMessage.Contains("IX_ServiceCategory"))
+                    response.Message = "This record already exists.";
+                else if (errorMessage.Contains("FK"))
+                    response.Message = "This record is in use, so it can't be deleted.";
                 else
-                    response.Message = ex.Message;
+                    response.Message = errorMessage;
             }
             return response;
         }

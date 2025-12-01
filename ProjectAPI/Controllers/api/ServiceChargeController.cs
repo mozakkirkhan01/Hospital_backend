@@ -13,7 +13,7 @@ namespace ProjectAPI.Controllers.api
     {
         [HttpPost]
         [Route("saveServiceCharge")]
-        public ExpandoObject saveServiceCharge(RequestModel requestModel)
+        public ExpandoObject SaveServiceCharge(RequestModel requestModel)
         {
             dynamic response = new ExpandoObject();
             try
@@ -28,6 +28,7 @@ namespace ProjectAPI.Controllers.api
                 if (model.ServiceChargeId > 0)
                 {
                     ServiceCharge = dbContext.ServiceCharges.Where(x => x.ServiceChargeId == model.ServiceChargeId).First();
+                    ServiceCharge.ServiceCategoryId = model.ServiceCategoryId;
                     ServiceCharge.ServiceSubCategoryId = model.ServiceSubCategoryId;
                     ServiceCharge.ServiceChargeAmount = model.ServiceChargeAmount;
                     ServiceCharge.Status = model.Status;

@@ -14,11 +14,19 @@ namespace Project
     
     public partial class ServiceSubCategory
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ServiceSubCategory()
+        {
+            this.ServiceCharges = new HashSet<ServiceCharge>();
+        }
+    
         public int ServiceSubCategoryId { get; set; }
         public int ServiceCategoryId { get; set; }
         public string ServiceSubCategoryName { get; set; }
         public byte Status { get; set; }
     
         public virtual ServiceCategory ServiceCategory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ServiceCharge> ServiceCharges { get; set; }
     }
 }

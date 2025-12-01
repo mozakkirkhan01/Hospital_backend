@@ -19,36 +19,64 @@ namespace ProjectAPI.Controllers.api
             try
             {
                 InstituteDbEntities dbContext = new InstituteDbEntities();
+
                 string AppKey = HttpContext.Current.Request.Headers["AppKey"];
                 AppData.CheckAppKey(dbContext, AppKey, (byte)KeyFor.Admin);
+
                 var decryptData = CryptoJs.Decrypt(requestModel.request, CryptoJs.key, CryptoJs.iv);
                 ServiceSubCategory model = JsonConvert.DeserializeObject<ServiceSubCategory>(decryptData);
 
-                ServiceSubCategory ServiceSubCategory = null;
+                bool isDuplicate = dbContext.ServiceSubCategories.Any(x =>
+                    x.ServiceSubCategoryName == model.ServiceSubCategoryName &&
+                    x.ServiceCategoryId == model.ServiceCategoryId &&
+                    x.ServiceSubCategoryId != model.ServiceSubCategoryId
+                );
+
+                if (isDuplicate)
+                {
+                    response.Message = "This subcategory already exists in this service category.";
+                    return response;
+                }
+
+                ServiceSubCategory entity;
+
                 if (model.ServiceSubCategoryId > 0)
                 {
-                    ServiceSubCategory = dbContext.ServiceSubCategories.Where(x => x.ServiceSubCategoryId == model.ServiceSubCategoryId).First();
-                    ServiceSubCategory.ServiceCategoryId = model.ServiceCategoryId;
-                    ServiceSubCategory.ServiceSubCategoryName = model.ServiceSubCategoryName;
-                    ServiceSubCategory.Status = model.Status;
+                    entity = dbContext.ServiceSubCategories
+                        .FirstOrDefault(x => x.ServiceSubCategoryId == model.ServiceSubCategoryId);
+
+                    if (entity == null)
+                    {
+                        response.Message = "Record not found.";
+                        return response;
+                    }
+
+                    entity.ServiceCategoryId = model.ServiceCategoryId;
+                    entity.ServiceSubCategoryName = model.ServiceSubCategoryName;
+                    entity.Status = model.Status;
                 }
                 else
                 {
-                    ServiceSubCategory = model;
+                    entity = model;
+                    dbContext.ServiceSubCategories.Add(entity);
                 }
 
-                if (ServiceSubCategory.ServiceSubCategoryId == 0)
-                    dbContext.ServiceSubCategories.Add(ServiceSubCategory);
                 dbContext.SaveChanges();
+
                 response.Message = ConstantData.SuccessMessage;
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("IX"))
-                    response.Message = "This record is already exist";
+                string errorMessage = ex.InnerException?.InnerException?.Message ?? ex.Message;
+
+                if (errorMessage.Contains("IX_ServiceSubCategory"))
+                    response.Message = "This subcategory already exists.";
+                else if (errorMessage.Contains("FK"))
+                    response.Message = "This record is in use, so it cannot be deleted.";
                 else
-                    response.Message = ex.Message;
+                    response.Message = errorMessage;
             }
+
             return response;
         }
 

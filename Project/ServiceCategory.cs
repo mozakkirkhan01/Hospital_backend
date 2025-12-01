@@ -18,6 +18,7 @@ namespace Project
         public ServiceCategory()
         {
             this.ServiceSubCategories = new HashSet<ServiceSubCategory>();
+            this.ServiceCharges = new HashSet<ServiceCharge>();
         }
     
         public int ServiceCategoryId { get; set; }
@@ -26,5 +27,7 @@ namespace Project
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ServiceSubCategory> ServiceSubCategories { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ServiceCharge> ServiceCharges { get; set; }
     }
 }
