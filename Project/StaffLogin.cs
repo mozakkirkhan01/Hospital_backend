@@ -19,6 +19,8 @@ namespace Project
         {
             this.Cities = new HashSet<City>();
             this.Companies = new HashSet<Company>();
+            this.Doctors = new HashSet<Doctor>();
+            this.Doctors1 = new HashSet<Doctor>();
             this.Menus = new HashSet<Menu>();
             this.Pages = new HashSet<Page>();
             this.PageGroups = new HashSet<PageGroup>();
@@ -30,8 +32,6 @@ namespace Project
             this.StaffLoginRoles = new HashSet<StaffLoginRole>();
             this.StaffLoginRoles1 = new HashSet<StaffLoginRole>();
             this.States = new HashSet<State>();
-            this.Doctors = new HashSet<Doctor>();
-            this.Doctors1 = new HashSet<Doctor>();
         }
     
         public int StaffLoginId { get; set; }
@@ -48,6 +48,10 @@ namespace Project
         public virtual ICollection<City> Cities { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Company> Companies { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Doctor> Doctors { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Doctor> Doctors1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Menu> Menus { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -73,9 +77,5 @@ namespace Project
         public virtual ICollection<StaffLoginRole> StaffLoginRoles1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<State> States { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Doctor> Doctors { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Doctor> Doctors1 { get; set; }
     }
 }

@@ -962,12 +962,18 @@
           <EntitySet Name="Departments" EntityType="InstituteDbModel.Department" />
           <EntitySet Name="Designations" EntityType="InstituteDbModel.Designation" />
           <EntitySet Name="Districts" EntityType="InstituteDbModel.District" />
+          <EntitySet Name="Doctors" EntityType="InstituteDbModel.Doctor" />
           <EntitySet Name="LoginLogs" EntityType="InstituteDbModel.LoginLog" />
           <EntitySet Name="Menus" EntityType="InstituteDbModel.Menu" />
+          <EntitySet Name="Opds" EntityType="InstituteDbModel.Opd" />
           <EntitySet Name="Pages" EntityType="InstituteDbModel.Page" />
           <EntitySet Name="PageGroups" EntityType="InstituteDbModel.PageGroup" />
+          <EntitySet Name="Patients" EntityType="InstituteDbModel.Patient" />
           <EntitySet Name="Roles" EntityType="InstituteDbModel.Role" />
           <EntitySet Name="RoleMenus" EntityType="InstituteDbModel.RoleMenu" />
+          <EntitySet Name="ServiceCategories" EntityType="InstituteDbModel.ServiceCategory" />
+          <EntitySet Name="ServiceCharges" EntityType="InstituteDbModel.ServiceCharge" />
+          <EntitySet Name="ServiceSubCategories" EntityType="InstituteDbModel.ServiceSubCategory" />
           <EntitySet Name="Staffs" EntityType="InstituteDbModel.Staff" />
           <EntitySet Name="StaffLogins" EntityType="InstituteDbModel.StaffLogin" />
           <EntitySet Name="StaffLoginRoles" EntityType="InstituteDbModel.StaffLoginRole" />
@@ -997,6 +1003,10 @@
             <End Role="Staff" EntitySet="Staffs" />
             <End Role="Database" EntitySet="Databases" />
           </AssociationSet>
+          <AssociationSet Name="FK_Doctor_Department" Association="InstituteDbModel.FK_Doctor_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Doctor" EntitySet="Doctors" />
+          </AssociationSet>
           <AssociationSet Name="FK_Staff_Department" Association="InstituteDbModel.FK_Staff_Department">
             <End Role="Department" EntitySet="Departments" />
             <End Role="Staff" EntitySet="Staffs" />
@@ -1008,6 +1018,22 @@
           <AssociationSet Name="FK_District_State" Association="InstituteDbModel.FK_District_State">
             <End Role="State" EntitySet="States" />
             <End Role="District" EntitySet="Districts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Doctor_Doctor" Association="InstituteDbModel.FK_Doctor_Doctor">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="Doctor1" EntitySet="Doctors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Doctor_StaffLogin" Association="InstituteDbModel.FK_Doctor_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="Doctor" EntitySet="Doctors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Doctor_StaffLogin1" Association="InstituteDbModel.FK_Doctor_StaffLogin1">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="Doctor" EntitySet="Doctors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Opd_Doctor" Association="InstituteDbModel.FK_Opd_Doctor">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="Opd" EntitySet="Opds" />
           </AssociationSet>
           <AssociationSet Name="FK_Menu_Menu" Association="InstituteDbModel.FK_Menu_Menu">
             <End Role="Menu" EntitySet="Menus" />
@@ -1024,6 +1050,10 @@
           <AssociationSet Name="FK_RoleMenu_Menu" Association="InstituteDbModel.FK_RoleMenu_Menu">
             <End Role="Menu" EntitySet="Menus" />
             <End Role="RoleMenu" EntitySet="RoleMenus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Opd_Patient" Association="InstituteDbModel.FK_Opd_Patient">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="Opd" EntitySet="Opds" />
           </AssociationSet>
           <AssociationSet Name="FK_Page_PageGroup" Association="InstituteDbModel.FK_Page_PageGroup">
             <End Role="PageGroup" EntitySet="PageGroups" />
@@ -1053,6 +1083,18 @@
             <End Role="StaffLogin" EntitySet="StaffLogins" />
             <End Role="RoleMenu" EntitySet="RoleMenus" />
           </AssociationSet>
+          <AssociationSet Name="FK_ServiceCharge_ServiceCategory" Association="InstituteDbModel.FK_ServiceCharge_ServiceCategory">
+            <End Role="ServiceCategory" EntitySet="ServiceCategories" />
+            <End Role="ServiceCharge" EntitySet="ServiceCharges" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceSubCategory_ServiceSubCategory" Association="InstituteDbModel.FK_ServiceSubCategory_ServiceSubCategory">
+            <End Role="ServiceCategory" EntitySet="ServiceCategories" />
+            <End Role="ServiceSubCategory" EntitySet="ServiceSubCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceCharge_ServiceSubCategory" Association="InstituteDbModel.FK_ServiceCharge_ServiceSubCategory">
+            <End Role="ServiceSubCategory" EntitySet="ServiceSubCategories" />
+            <End Role="ServiceCharge" EntitySet="ServiceCharges" />
+          </AssociationSet>
           <AssociationSet Name="FK_Staff_StaffLogin" Association="InstituteDbModel.FK_Staff_StaffLogin">
             <End Role="StaffLogin" EntitySet="StaffLogins" />
             <End Role="Staff" EntitySet="Staffs" />
@@ -1081,49 +1123,7 @@
             <End Role="StaffLogin" EntitySet="StaffLogins" />
             <End Role="State" EntitySet="States" />
           </AssociationSet>
-          <EntitySet Name="Doctors" EntityType="InstituteDbModel.Doctor" />
-          <AssociationSet Name="FK_Doctor_Department" Association="InstituteDbModel.FK_Doctor_Department">
-            <End Role="Department" EntitySet="Departments" />
-            <End Role="Doctor" EntitySet="Doctors" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Doctor_Doctor" Association="InstituteDbModel.FK_Doctor_Doctor">
-            <End Role="Doctor" EntitySet="Doctors" />
-            <End Role="Doctor1" EntitySet="Doctors" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Doctor_StaffLogin" Association="InstituteDbModel.FK_Doctor_StaffLogin">
-            <End Role="StaffLogin" EntitySet="StaffLogins" />
-            <End Role="Doctor" EntitySet="Doctors" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Doctor_StaffLogin1" Association="InstituteDbModel.FK_Doctor_StaffLogin1">
-            <End Role="StaffLogin" EntitySet="StaffLogins" />
-            <End Role="Doctor" EntitySet="Doctors" />
-          </AssociationSet>
-          <EntitySet Name="Patients" EntityType="InstituteDbModel.Patient" />
-          <EntitySet Name="Opds" EntityType="InstituteDbModel.Opd" />
-          <AssociationSet Name="FK_Opd_Doctor" Association="InstituteDbModel.FK_Opd_Doctor">
-            <End Role="Doctor" EntitySet="Doctors" />
-            <End Role="Opd" EntitySet="Opds" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Opd_Patient" Association="InstituteDbModel.FK_Opd_Patient">
-            <End Role="Patient" EntitySet="Patients" />
-            <End Role="Opd" EntitySet="Opds" />
-          </AssociationSet>
-          <EntitySet Name="ServiceCategories" EntityType="InstituteDbModel.ServiceCategory" />
-          <EntitySet Name="ServiceCharges" EntityType="InstituteDbModel.ServiceCharge" />
-          <EntitySet Name="ServiceSubCategories" EntityType="InstituteDbModel.ServiceSubCategory" />
-          <AssociationSet Name="FK_ServiceSubCategory_ServiceSubCategory" Association="InstituteDbModel.FK_ServiceSubCategory_ServiceSubCategory">
-            <End Role="ServiceCategory" EntitySet="ServiceCategories" />
-            <End Role="ServiceSubCategory" EntitySet="ServiceSubCategories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ServiceCharge_ServiceCategory" Association="InstituteDbModel.FK_ServiceCharge_ServiceCategory">
-            <End Role="ServiceCategory" EntitySet="ServiceCategories" />
-            <End Role="ServiceCharge" EntitySet="ServiceCharges" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ServiceCharge_ServiceSubCategory" Association="InstituteDbModel.FK_ServiceCharge_ServiceSubCategory">
-            <End Role="ServiceSubCategory" EntitySet="ServiceSubCategories" />
-            <End Role="ServiceCharge" EntitySet="ServiceCharges" />
-          </AssociationSet>
-          </EntityContainer>
+        </EntityContainer>
         <EntityType Name="App">
           <Key>
             <PropertyRef Name="AppId" />
@@ -1211,8 +1211,8 @@
           <Property Name="DepartmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DepartmentName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Staffs" Relationship="InstituteDbModel.FK_Staff_Department" FromRole="Department" ToRole="Staff" />
           <NavigationProperty Name="Doctors" Relationship="InstituteDbModel.FK_Doctor_Department" FromRole="Department" ToRole="Doctor" />
+          <NavigationProperty Name="Staffs" Relationship="InstituteDbModel.FK_Staff_Department" FromRole="Department" ToRole="Staff" />
         </EntityType>
         <EntityType Name="Designation">
           <Key>
@@ -1231,6 +1231,32 @@
           <Property Name="DistrictName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="StateId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="State" Relationship="InstituteDbModel.FK_District_State" FromRole="District" ToRole="State" />
+        </EntityType>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="DoctorId" />
+          </Key>
+          <Property Name="DoctorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DoctorName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DepartmentId" Type="Int32" Nullable="false" />
+          <Property Name="Qualification" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="Byte" Nullable="false" />
+          <Property Name="ConsultFee" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="MobileNo" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Byte" />
+          <Property Name="JoinDate" Type="DateTime" Precision="0" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Department" Relationship="InstituteDbModel.FK_Doctor_Department" FromRole="Doctor" ToRole="Department" />
+          <NavigationProperty Name="Doctor1" Relationship="InstituteDbModel.FK_Doctor_Doctor" FromRole="Doctor" ToRole="Doctor1" />
+          <NavigationProperty Name="Doctor2" Relationship="InstituteDbModel.FK_Doctor_Doctor" FromRole="Doctor1" ToRole="Doctor" />
+          <NavigationProperty Name="StaffLogin" Relationship="InstituteDbModel.FK_Doctor_StaffLogin" FromRole="Doctor" ToRole="StaffLogin" />
+          <NavigationProperty Name="StaffLogin1" Relationship="InstituteDbModel.FK_Doctor_StaffLogin1" FromRole="Doctor" ToRole="StaffLogin" />
+          <NavigationProperty Name="Opds" Relationship="InstituteDbModel.FK_Opd_Doctor" FromRole="Doctor" ToRole="Opd" />
         </EntityType>
         <EntityType Name="LoginLog">
           <Key>
@@ -1269,6 +1295,22 @@
           <NavigationProperty Name="StaffLogin" Relationship="InstituteDbModel.FK_Menu_StaffLogin" FromRole="Menu" ToRole="StaffLogin" />
           <NavigationProperty Name="RoleMenus" Relationship="InstituteDbModel.FK_RoleMenu_Menu" FromRole="Menu" ToRole="RoleMenu" />
         </EntityType>
+        <EntityType Name="Opd">
+          <Key>
+            <PropertyRef Name="OpdId" />
+          </Key>
+          <Property Name="OpdId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientId" Type="Int32" />
+          <Property Name="DoctorId" Type="Int32" />
+          <Property Name="BookingDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ShiftId" Type="Int32" />
+          <Property Name="TokenNo" Type="Int32" />
+          <Property Name="VisitType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fee" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Doctor" Relationship="InstituteDbModel.FK_Opd_Doctor" FromRole="Opd" ToRole="Doctor" />
+          <NavigationProperty Name="Patient" Relationship="InstituteDbModel.FK_Opd_Patient" FromRole="Opd" ToRole="Patient" />
+        </EntityType>
         <EntityType Name="Page">
           <Key>
             <PropertyRef Name="PageId" />
@@ -1295,6 +1337,30 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Pages" Relationship="InstituteDbModel.FK_Page_PageGroup" FromRole="PageGroup" ToRole="Page" />
           <NavigationProperty Name="StaffLogin" Relationship="InstituteDbModel.FK_PageGroup_StaffLogin" FromRole="PageGroup" ToRole="StaffLogin" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="PatientId" />
+          </Key>
+          <Property Name="PatientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UHIDNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PatientName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="Byte" Nullable="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="MobileNo" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AadharNo" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="JoinDate" Type="DateTime" Precision="0" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="BloodGroup" Type="Byte" />
+          <Property Name="MaritalStatus" Type="Byte" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Opds" Relationship="InstituteDbModel.FK_Opd_Patient" FromRole="Patient" ToRole="Opd" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -1324,6 +1390,43 @@
           <NavigationProperty Name="Menu" Relationship="InstituteDbModel.FK_RoleMenu_Menu" FromRole="RoleMenu" ToRole="Menu" />
           <NavigationProperty Name="Role" Relationship="InstituteDbModel.FK_RoleMenu_Role" FromRole="RoleMenu" ToRole="Role" />
           <NavigationProperty Name="StaffLogin" Relationship="InstituteDbModel.FK_RoleMenu_StaffLogin" FromRole="RoleMenu" ToRole="StaffLogin" />
+        </EntityType>
+        <EntityType Name="ServiceCategory">
+          <Key>
+            <PropertyRef Name="ServiceCategoryId" />
+          </Key>
+          <Property Name="ServiceCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceCategoryName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="ServiceCharges" Relationship="InstituteDbModel.FK_ServiceCharge_ServiceCategory" FromRole="ServiceCategory" ToRole="ServiceCharge" />
+          <NavigationProperty Name="ServiceSubCategories" Relationship="InstituteDbModel.FK_ServiceSubCategory_ServiceSubCategory" FromRole="ServiceCategory" ToRole="ServiceSubCategory" />
+        </EntityType>
+        <EntityType Name="ServiceCharge">
+          <Key>
+            <PropertyRef Name="ServiceChargeId" />
+          </Key>
+          <Property Name="ServiceChargeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="ServiceSubCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="ServiceChargeAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ServiceCategory" Relationship="InstituteDbModel.FK_ServiceCharge_ServiceCategory" FromRole="ServiceCharge" ToRole="ServiceCategory" />
+          <NavigationProperty Name="ServiceSubCategory" Relationship="InstituteDbModel.FK_ServiceCharge_ServiceSubCategory" FromRole="ServiceCharge" ToRole="ServiceSubCategory" />
+        </EntityType>
+        <EntityType Name="ServiceSubCategory">
+          <Key>
+            <PropertyRef Name="ServiceSubCategoryId" />
+          </Key>
+          <Property Name="ServiceSubCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="ServiceSubCategoryName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="ServiceCategory" Relationship="InstituteDbModel.FK_ServiceSubCategory_ServiceSubCategory" FromRole="ServiceSubCategory" ToRole="ServiceCategory" />
+          <NavigationProperty Name="ServiceCharges" Relationship="InstituteDbModel.FK_ServiceCharge_ServiceSubCategory" FromRole="ServiceSubCategory" ToRole="ServiceCharge" />
         </EntityType>
         <EntityType Name="Staff">
           <Key>
@@ -1373,6 +1476,8 @@
           <Property Name="Status" Type="Byte" Nullable="false" />
           <NavigationProperty Name="Cities" Relationship="InstituteDbModel.FK_City_StaffLogin" FromRole="StaffLogin" ToRole="City" />
           <NavigationProperty Name="Companies" Relationship="InstituteDbModel.FK_Company_StaffLogin" FromRole="StaffLogin" ToRole="Company" />
+          <NavigationProperty Name="Doctors" Relationship="InstituteDbModel.FK_Doctor_StaffLogin" FromRole="StaffLogin" ToRole="Doctor" />
+          <NavigationProperty Name="Doctors1" Relationship="InstituteDbModel.FK_Doctor_StaffLogin1" FromRole="StaffLogin" ToRole="Doctor" />
           <NavigationProperty Name="Menus" Relationship="InstituteDbModel.FK_Menu_StaffLogin" FromRole="StaffLogin" ToRole="Menu" />
           <NavigationProperty Name="Pages" Relationship="InstituteDbModel.FK_Page_StaffLogin" FromRole="StaffLogin" ToRole="Page" />
           <NavigationProperty Name="PageGroups" Relationship="InstituteDbModel.FK_PageGroup_StaffLogin" FromRole="StaffLogin" ToRole="PageGroup" />
@@ -1387,8 +1492,6 @@
           <NavigationProperty Name="StaffLoginRoles" Relationship="InstituteDbModel.FK_StaffLoginRole_StaffLogin" FromRole="StaffLogin" ToRole="StaffLoginRole" />
           <NavigationProperty Name="StaffLoginRoles1" Relationship="InstituteDbModel.FK_StaffLoginRole_StaffLogin1" FromRole="StaffLogin" ToRole="StaffLoginRole" />
           <NavigationProperty Name="States" Relationship="InstituteDbModel.FK_State_StaffLogin" FromRole="StaffLogin" ToRole="State" />
-          <NavigationProperty Name="Doctors" Relationship="InstituteDbModel.FK_Doctor_StaffLogin" FromRole="StaffLogin" ToRole="Doctor" />
-          <NavigationProperty Name="Doctors1" Relationship="InstituteDbModel.FK_Doctor_StaffLogin1" FromRole="StaffLogin" ToRole="Doctor" />
         </EntityType>
         <EntityType Name="StaffLoginRole">
           <Key>
@@ -1500,6 +1603,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Doctor_Department">
+          <End Type="InstituteDbModel.Department" Role="Department" Multiplicity="1" />
+          <End Type="InstituteDbModel.Doctor" Role="Doctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Doctor">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Staff_Department">
           <End Type="InstituteDbModel.Department" Role="Department" Multiplicity="1" />
           <End Type="InstituteDbModel.Staff" Role="Staff" Multiplicity="*" />
@@ -1533,6 +1648,54 @@
             </Principal>
             <Dependent Role="District">
               <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Doctor_Doctor">
+          <End Type="InstituteDbModel.Doctor" Role="Doctor" Multiplicity="1" />
+          <End Type="InstituteDbModel.Doctor" Role="Doctor1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="DoctorId" />
+            </Principal>
+            <Dependent Role="Doctor1">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Doctor_StaffLogin">
+          <End Type="InstituteDbModel.StaffLogin" Role="StaffLogin" Multiplicity="1" />
+          <End Type="InstituteDbModel.Doctor" Role="Doctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
+            </Principal>
+            <Dependent Role="Doctor">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Doctor_StaffLogin1">
+          <End Type="InstituteDbModel.StaffLogin" Role="StaffLogin" Multiplicity="0..1" />
+          <End Type="InstituteDbModel.Doctor" Role="Doctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
+            </Principal>
+            <Dependent Role="Doctor">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Opd_Doctor">
+          <End Type="InstituteDbModel.Doctor" Role="Doctor" Multiplicity="0..1" />
+          <End Type="InstituteDbModel.Opd" Role="Opd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="DoctorId" />
+            </Principal>
+            <Dependent Role="Opd">
+              <PropertyRef Name="DoctorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1583,6 +1746,18 @@
             </Principal>
             <Dependent Role="RoleMenu">
               <PropertyRef Name="MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Opd_Patient">
+          <End Type="InstituteDbModel.Patient" Role="Patient" Multiplicity="0..1" />
+          <End Type="InstituteDbModel.Opd" Role="Opd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientId" />
+            </Principal>
+            <Dependent Role="Opd">
+              <PropertyRef Name="PatientId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1672,6 +1847,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ServiceCharge_ServiceCategory">
+          <End Type="InstituteDbModel.ServiceCategory" Role="ServiceCategory" Multiplicity="1" />
+          <End Type="InstituteDbModel.ServiceCharge" Role="ServiceCharge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceCategory">
+              <PropertyRef Name="ServiceCategoryId" />
+            </Principal>
+            <Dependent Role="ServiceCharge">
+              <PropertyRef Name="ServiceCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceSubCategory_ServiceSubCategory">
+          <End Type="InstituteDbModel.ServiceCategory" Role="ServiceCategory" Multiplicity="1" />
+          <End Type="InstituteDbModel.ServiceSubCategory" Role="ServiceSubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceCategory">
+              <PropertyRef Name="ServiceCategoryId" />
+            </Principal>
+            <Dependent Role="ServiceSubCategory">
+              <PropertyRef Name="ServiceCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceCharge_ServiceSubCategory">
+          <End Type="InstituteDbModel.ServiceSubCategory" Role="ServiceSubCategory" Multiplicity="1" />
+          <End Type="InstituteDbModel.ServiceCharge" Role="ServiceCharge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceSubCategory">
+              <PropertyRef Name="ServiceSubCategoryId" />
+            </Principal>
+            <Dependent Role="ServiceCharge">
+              <PropertyRef Name="ServiceSubCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Staff_StaffLogin">
           <End Type="InstituteDbModel.StaffLogin" Role="StaffLogin" Multiplicity="0..1" />
           <End Type="InstituteDbModel.Staff" Role="Staff" Multiplicity="*" />
@@ -1753,217 +1964,6 @@
             </Principal>
             <Dependent Role="State">
               <PropertyRef Name="UpdatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Doctor">
-          <Key>
-            <PropertyRef Name="DoctorId" />
-          </Key>
-          <Property Name="DoctorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DoctorName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="DepartmentId" Type="Int32" Nullable="false" />
-          <Property Name="Qualification" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Gender" Type="Byte" Nullable="false" />
-          <Property Name="ConsultFee" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="MobileNo" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Byte" />
-          <Property Name="JoinDate" Type="DateTime" Precision="0" />
-          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
-          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Department" Relationship="InstituteDbModel.FK_Doctor_Department" FromRole="Doctor" ToRole="Department" />
-          <NavigationProperty Name="Doctor1" Relationship="InstituteDbModel.FK_Doctor_Doctor" FromRole="Doctor" ToRole="Doctor1" />
-          <NavigationProperty Name="Doctor2" Relationship="InstituteDbModel.FK_Doctor_Doctor" FromRole="Doctor1" ToRole="Doctor" />
-          <NavigationProperty Name="StaffLogin" Relationship="InstituteDbModel.FK_Doctor_StaffLogin" FromRole="Doctor" ToRole="StaffLogin" />
-          <NavigationProperty Name="StaffLogin1" Relationship="InstituteDbModel.FK_Doctor_StaffLogin1" FromRole="Doctor" ToRole="StaffLogin" />
-          <NavigationProperty Name="Opds" Relationship="InstituteDbModel.FK_Opd_Doctor" FromRole="Doctor" ToRole="Opd" />
-        </EntityType>
-        <Association Name="FK_Doctor_Department">
-          <End Type="InstituteDbModel.Department" Role="Department" Multiplicity="1" />
-          <End Type="InstituteDbModel.Doctor" Role="Doctor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="DepartmentId" />
-            </Principal>
-            <Dependent Role="Doctor">
-              <PropertyRef Name="DepartmentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Doctor_Doctor">
-          <End Type="InstituteDbModel.Doctor" Role="Doctor" Multiplicity="1" />
-          <End Type="InstituteDbModel.Doctor" Role="Doctor1" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Doctor">
-              <PropertyRef Name="DoctorId" />
-            </Principal>
-            <Dependent Role="Doctor1">
-              <PropertyRef Name="DoctorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Doctor_StaffLogin">
-          <End Type="InstituteDbModel.StaffLogin" Role="StaffLogin" Multiplicity="1" />
-          <End Type="InstituteDbModel.Doctor" Role="Doctor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StaffLogin">
-              <PropertyRef Name="StaffLoginId" />
-            </Principal>
-            <Dependent Role="Doctor">
-              <PropertyRef Name="CreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Doctor_StaffLogin1">
-          <End Type="InstituteDbModel.StaffLogin" Role="StaffLogin" Multiplicity="0..1" />
-          <End Type="InstituteDbModel.Doctor" Role="Doctor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StaffLogin">
-              <PropertyRef Name="StaffLoginId" />
-            </Principal>
-            <Dependent Role="Doctor">
-              <PropertyRef Name="UpdatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Patient">
-          <Key>
-            <PropertyRef Name="PatientId" />
-          </Key>
-          <Property Name="PatientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UHIDNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="PatientName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Gender" Type="Byte" Nullable="false" />
-          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
-          <Property Name="Age" Type="Int32" Nullable="false" />
-          <Property Name="MobileNo" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AadharNo" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
-          <Property Name="JoinDate" Type="DateTime" Precision="0" />
-          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
-          <Property Name="BloodGroup" Type="Byte" />
-          <Property Name="MaritalStatus" Type="Byte" />
-          <Property Name="Status" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Opds" Relationship="InstituteDbModel.FK_Opd_Patient" FromRole="Patient" ToRole="Opd" />
-        </EntityType>
-        <EntityType Name="Opd">
-          <Key>
-            <PropertyRef Name="OpdId" />
-          </Key>
-          <Property Name="OpdId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PatientId" Type="Int32" />
-          <Property Name="DoctorId" Type="Int32" />
-          <Property Name="BookingDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="ShiftId" Type="Int32" />
-          <Property Name="TokenNo" Type="Int32" />
-          <Property Name="VisitType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Fee" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Doctor" Relationship="InstituteDbModel.FK_Opd_Doctor" FromRole="Opd" ToRole="Doctor" />
-          <NavigationProperty Name="Patient" Relationship="InstituteDbModel.FK_Opd_Patient" FromRole="Opd" ToRole="Patient" />
-        </EntityType>
-        <Association Name="FK_Opd_Doctor">
-          <End Type="InstituteDbModel.Doctor" Role="Doctor" Multiplicity="0..1" />
-          <End Type="InstituteDbModel.Opd" Role="Opd" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Doctor">
-              <PropertyRef Name="DoctorId" />
-            </Principal>
-            <Dependent Role="Opd">
-              <PropertyRef Name="DoctorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Opd_Patient">
-          <End Type="InstituteDbModel.Patient" Role="Patient" Multiplicity="0..1" />
-          <End Type="InstituteDbModel.Opd" Role="Opd" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Patient">
-              <PropertyRef Name="PatientId" />
-            </Principal>
-            <Dependent Role="Opd">
-              <PropertyRef Name="PatientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="ServiceCategory">
-          <Key>
-            <PropertyRef Name="ServiceCategoryId" />
-          </Key>
-          <Property Name="ServiceCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceCategoryName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="ServiceSubCategories" Relationship="InstituteDbModel.FK_ServiceSubCategory_ServiceSubCategory" FromRole="ServiceCategory" ToRole="ServiceSubCategory" />
-          <NavigationProperty Name="ServiceCharges" Relationship="InstituteDbModel.FK_ServiceCharge_ServiceCategory" FromRole="ServiceCategory" ToRole="ServiceCharge" />
-        </EntityType>
-        <EntityType Name="ServiceCharge">
-          <Key>
-            <PropertyRef Name="ServiceChargeId" />
-          </Key>
-          <Property Name="ServiceChargeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceSubCategoryId" Type="Int32" Nullable="false" />
-          <Property Name="ServiceChargeAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Status" Type="Byte" Nullable="false" />
-          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
-          <Property Name="ServiceCategoryId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ServiceCategory" Relationship="InstituteDbModel.FK_ServiceCharge_ServiceCategory" FromRole="ServiceCharge" ToRole="ServiceCategory" />
-          <NavigationProperty Name="ServiceSubCategory" Relationship="InstituteDbModel.FK_ServiceCharge_ServiceSubCategory" FromRole="ServiceCharge" ToRole="ServiceSubCategory" />
-        </EntityType>
-        <EntityType Name="ServiceSubCategory">
-          <Key>
-            <PropertyRef Name="ServiceSubCategoryId" />
-          </Key>
-          <Property Name="ServiceSubCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceCategoryId" Type="Int32" Nullable="false" />
-          <Property Name="ServiceSubCategoryName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="ServiceCategory" Relationship="InstituteDbModel.FK_ServiceSubCategory_ServiceSubCategory" FromRole="ServiceSubCategory" ToRole="ServiceCategory" />
-          <NavigationProperty Name="ServiceCharges" Relationship="InstituteDbModel.FK_ServiceCharge_ServiceSubCategory" FromRole="ServiceSubCategory" ToRole="ServiceCharge" />
-        </EntityType>
-        <Association Name="FK_ServiceSubCategory_ServiceSubCategory">
-          <End Type="InstituteDbModel.ServiceCategory" Role="ServiceCategory" Multiplicity="1" />
-          <End Type="InstituteDbModel.ServiceSubCategory" Role="ServiceSubCategory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ServiceCategory">
-              <PropertyRef Name="ServiceCategoryId" />
-            </Principal>
-            <Dependent Role="ServiceSubCategory">
-              <PropertyRef Name="ServiceCategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ServiceCharge_ServiceCategory">
-          <End Type="InstituteDbModel.ServiceCategory" Role="ServiceCategory" Multiplicity="1" />
-          <End Type="InstituteDbModel.ServiceCharge" Role="ServiceCharge" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ServiceCategory">
-              <PropertyRef Name="ServiceCategoryId" />
-            </Principal>
-            <Dependent Role="ServiceCharge">
-              <PropertyRef Name="ServiceCategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ServiceCharge_ServiceSubCategory">
-          <End Type="InstituteDbModel.ServiceSubCategory" Role="ServiceSubCategory" Multiplicity="1" />
-          <End Type="InstituteDbModel.ServiceCharge" Role="ServiceCharge" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ServiceSubCategory">
-              <PropertyRef Name="ServiceSubCategoryId" />
-            </Principal>
-            <Dependent Role="ServiceCharge">
-              <PropertyRef Name="ServiceSubCategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2080,6 +2080,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Doctors">
+            <EntityTypeMapping TypeName="InstituteDbModel.Doctor">
+              <MappingFragment StoreEntitySet="Doctor">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="ConsultFee" ColumnName="ConsultFee" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Qualification" ColumnName="Qualification" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="DoctorName" ColumnName="DoctorName" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="LoginLogs">
             <EntityTypeMapping TypeName="InstituteDbModel.LoginLog">
               <MappingFragment StoreEntitySet="LoginLog">
@@ -2114,6 +2135,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Opds">
+            <EntityTypeMapping TypeName="InstituteDbModel.Opd">
+              <MappingFragment StoreEntitySet="Opd">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Fee" ColumnName="Fee" />
+                <ScalarProperty Name="VisitType" ColumnName="VisitType" />
+                <ScalarProperty Name="TokenNo" ColumnName="TokenNo" />
+                <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+                <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="OpdId" ColumnName="OpdId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Pages">
             <EntityTypeMapping TypeName="InstituteDbModel.Page">
               <MappingFragment StoreEntitySet="Page">
@@ -2135,6 +2171,30 @@
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="PageGroupName" ColumnName="PageGroupName" />
                 <ScalarProperty Name="PageGroupId" ColumnName="PageGroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="InstituteDbModel.Patient">
+              <MappingFragment StoreEntitySet="Patient">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="BloodGroup" ColumnName="BloodGroup" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
+                <ScalarProperty Name="AadharNo" ColumnName="AadharNo" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="PatientName" ColumnName="PatientName" />
+                <ScalarProperty Name="UHIDNo" ColumnName="UHIDNo" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2160,6 +2220,40 @@
                 <ScalarProperty Name="MenuId" ColumnName="MenuId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="RoleMenuId" ColumnName="RoleMenuId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceCategories">
+            <EntityTypeMapping TypeName="InstituteDbModel.ServiceCategory">
+              <MappingFragment StoreEntitySet="ServiceCategory">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ServiceCategoryName" ColumnName="ServiceCategoryName" />
+                <ScalarProperty Name="ServiceCategoryId" ColumnName="ServiceCategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceCharges">
+            <EntityTypeMapping TypeName="InstituteDbModel.ServiceCharge">
+              <MappingFragment StoreEntitySet="ServiceCharge">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ServiceChargeAmount" ColumnName="ServiceChargeAmount" />
+                <ScalarProperty Name="ServiceSubCategoryId" ColumnName="ServiceSubCategoryId" />
+                <ScalarProperty Name="ServiceCategoryId" ColumnName="ServiceCategoryId" />
+                <ScalarProperty Name="ServiceChargeId" ColumnName="ServiceChargeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceSubCategories">
+            <EntityTypeMapping TypeName="InstituteDbModel.ServiceSubCategory">
+              <MappingFragment StoreEntitySet="ServiceSubCategory">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ServiceSubCategoryName" ColumnName="ServiceSubCategoryName" />
+                <ScalarProperty Name="ServiceCategoryId" ColumnName="ServiceCategoryId" />
+                <ScalarProperty Name="ServiceSubCategoryId" ColumnName="ServiceSubCategoryId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2237,100 +2331,6 @@
                 <ScalarProperty Name="StateCode" ColumnName="StateCode" />
                 <ScalarProperty Name="StateName" ColumnName="StateName" />
                 <ScalarProperty Name="StateId" ColumnName="StateId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Doctors">
-            <EntityTypeMapping TypeName="InstituteDbModel.Doctor">
-              <MappingFragment StoreEntitySet="Doctor">
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-                <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="ConsultFee" ColumnName="ConsultFee" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="Qualification" ColumnName="Qualification" />
-                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
-                <ScalarProperty Name="DoctorName" ColumnName="DoctorName" />
-                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Patients">
-            <EntityTypeMapping TypeName="InstituteDbModel.Patient">
-              <MappingFragment StoreEntitySet="Patient">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
-                <ScalarProperty Name="BloodGroup" ColumnName="BloodGroup" />
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
-                <ScalarProperty Name="AadharNo" ColumnName="AadharNo" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="Age" ColumnName="Age" />
-                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="PatientName" ColumnName="PatientName" />
-                <ScalarProperty Name="UHIDNo" ColumnName="UHIDNo" />
-                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Opds">
-            <EntityTypeMapping TypeName="InstituteDbModel.Opd">
-              <MappingFragment StoreEntitySet="Opd">
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="Fee" ColumnName="Fee" />
-                <ScalarProperty Name="VisitType" ColumnName="VisitType" />
-                <ScalarProperty Name="TokenNo" ColumnName="TokenNo" />
-                <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
-                <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
-                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
-                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
-                <ScalarProperty Name="OpdId" ColumnName="OpdId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ServiceCategories">
-            <EntityTypeMapping TypeName="InstituteDbModel.ServiceCategory">
-              <MappingFragment StoreEntitySet="ServiceCategory">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="ServiceCategoryName" ColumnName="ServiceCategoryName" />
-                <ScalarProperty Name="ServiceCategoryId" ColumnName="ServiceCategoryId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ServiceCharges">
-            <EntityTypeMapping TypeName="InstituteDbModel.ServiceCharge">
-              <MappingFragment StoreEntitySet="ServiceCharge">
-                <ScalarProperty Name="ServiceCategoryId" ColumnName="ServiceCategoryId" />
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="ServiceChargeAmount" ColumnName="ServiceChargeAmount" />
-                <ScalarProperty Name="ServiceSubCategoryId" ColumnName="ServiceSubCategoryId" />
-                <ScalarProperty Name="ServiceChargeId" ColumnName="ServiceChargeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ServiceSubCategories">
-            <EntityTypeMapping TypeName="InstituteDbModel.ServiceSubCategory">
-              <MappingFragment StoreEntitySet="ServiceSubCategory">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="ServiceSubCategoryName" ColumnName="ServiceSubCategoryName" />
-                <ScalarProperty Name="ServiceCategoryId" ColumnName="ServiceCategoryId" />
-                <ScalarProperty Name="ServiceSubCategoryId" ColumnName="ServiceSubCategoryId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

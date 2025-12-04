@@ -95,15 +95,13 @@ namespace ProjectAPI.Controllers.api
                 var decryptData = CryptoJs.Decrypt(requestModel.request, CryptoJs.key, CryptoJs.iv);
                 ServiceSubCategory model = JsonConvert.DeserializeObject<ServiceSubCategory>(decryptData);
                 var list = (from d1 in dbContext.ServiceSubCategories
-                            join d3 in dbContext.ServiceCategories on d1.ServiceCategoryId equals d3.ServiceCategoryId
-                            where (model.ServiceSubCategoryId == d1.ServiceSubCategoryId || model.ServiceSubCategoryId == 0) && (model.Status == d1.Status || model.Status == 0)
-                            orderby d1.ServiceSubCategoryName
+                            join s1 in dbContext.ServiceCategories on d1.ServiceCategoryId equals s1.ServiceCategoryId
                             select new
                             {
                                 d1.ServiceSubCategoryId,
                                 d1.ServiceSubCategoryName,
                                 d1.Status,
-                                d1.ServiceCategoryId,
+                                d1.ServiceCategory.ServiceCategoryId,
                                 d1.ServiceCategory.ServiceCategoryName
 
                             }).ToList();

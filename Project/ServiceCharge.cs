@@ -15,6 +15,7 @@ namespace Project
     public partial class ServiceCharge
     {
         public int ServiceChargeId { get; set; }
+        public int ServiceCategoryId { get; set; }
         public int ServiceSubCategoryId { get; set; }
         public decimal ServiceChargeAmount { get; set; }
         public byte Status { get; set; }
@@ -22,7 +23,6 @@ namespace Project
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
-        public int ServiceCategoryId { get; set; }
     
         public virtual ServiceCategory ServiceCategory { get; set; }
         public virtual ServiceSubCategory ServiceSubCategory { get; set; }

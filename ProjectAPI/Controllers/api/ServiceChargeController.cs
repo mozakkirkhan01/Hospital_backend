@@ -56,6 +56,66 @@ namespace ProjectAPI.Controllers.api
             }
             return response;
         }
+        [HttpPost]
+        [Route("serviceChargeList")]
+        public ExpandoObject ServiceChargeList(RequestModel requestModel)
+        {
+
+            dynamic response = new ExpandoObject();
+            try
+            {
+                InstituteDbEntities dbContext = new InstituteDbEntities();
+                string AppKey = HttpContext.Current.Request.Headers["AppKey"];
+                AppData.CheckAppKey(dbContext, AppKey, (byte)KeyFor.Admin);
+                var decryptData = CryptoJs.Decrypt(requestModel.request, CryptoJs.key, CryptoJs.iv);
+                ServiceSubCategory model = JsonConvert.DeserializeObject<ServiceSubCategory>(decryptData);
+                var list = (from d1 in dbContext.ServiceCharges
+                            select new
+                            {
+                                d1.ServiceChargeId,
+                                d1.ServiceCategory.ServiceCategoryName,
+                                d1.ServiceSubCategory.ServiceSubCategoryName,
+                                d1.ServiceChargeAmount,
+                                d1.Status,
+
+                            }).ToList();
+
+                response.serviceChargeList = list;
+                response.Message = ConstantData.SuccessMessage;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+            }
+            return response;
+        }
+
+        [HttpPost]
+        [Route("deleteserviceChargeList")]
+        public ExpandoObject DeleteserviceChargeList(RequestModel requestModel)
+        {
+            dynamic response = new ExpandoObject();
+            try
+            {
+                InstituteDbEntities dbContext = new InstituteDbEntities();
+                string AppKey = HttpContext.Current.Request.Headers["AppKey"];
+                AppData.CheckAppKey(dbContext, AppKey, (byte)KeyFor.Admin);
+                var decryptData = CryptoJs.Decrypt(requestModel.request, CryptoJs.key, CryptoJs.iv);
+                ServiceCharge model = JsonConvert.DeserializeObject<ServiceCharge>(decryptData);
+                var ServiceCharge = dbContext.ServiceCharges.Where(x => x.ServiceChargeId == model.ServiceChargeId).First();
+                dbContext.ServiceCharges.Remove(ServiceCharge);
+                dbContext.SaveChanges();
+                response.Message = ConstantData.SuccessMessage;
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("FK"))
+                    response.Message = "This record is in use. so can't delete.";
+                else
+                    response.Message = ex.Message;
+            }
+            return response;
+        }
 
     }
 }
