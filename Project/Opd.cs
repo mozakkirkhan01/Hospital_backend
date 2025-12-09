@@ -15,16 +15,23 @@ namespace Project
     public partial class Opd
     {
         public int OpdId { get; set; }
-        public Nullable<int> PatientId { get; set; }
-        public Nullable<int> DoctorId { get; set; }
-        public System.DateTime BookingDate { get; set; }
-        public Nullable<int> ShiftId { get; set; }
-        public Nullable<int> TokenNo { get; set; }
-        public string VisitType { get; set; }
-        public Nullable<decimal> Fee { get; set; }
+        public int PatientId { get; set; }
+        public int OpdNo { get; set; }
+        public int TokenNo { get; set; }
+        public System.DateTime OpdDate { get; set; }
+        public byte OpdType { get; set; }
+        public decimal LineTotal { get; set; }
+        public Nullable<decimal> TotalDiscount { get; set; }
+        public decimal GrandTotal { get; set; }
+        public int CreatedBy { get; set; }
         public System.DateTime CreatedOn { get; set; }
+        public Nullable<int> UpdatedBy { get; set; }
+        public Nullable<System.DateTime> UpdatedOn { get; set; }
+        public int PaymentId { get; set; }
+        public byte PaymentStatus { get; set; }
+        public string Remarks { get; set; }
     
-        public virtual Doctor Doctor { get; set; }
         public virtual Patient Patient { get; set; }
+        public virtual Payment Payment { get; set; }
     }
 }

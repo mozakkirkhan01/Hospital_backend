@@ -113,6 +113,9 @@
     <Compile Include="Opd.cs">
       <DependentUpon>InstituteDb.tt</DependentUpon>
     </Compile>
+    <Compile Include="OpdDetail.cs">
+      <DependentUpon>InstituteDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Page.cs">
       <DependentUpon>InstituteDb.tt</DependentUpon>
     </Compile>
@@ -120,6 +123,9 @@
       <DependentUpon>InstituteDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Patient.cs">
+      <DependentUpon>InstituteDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Payment.cs">
       <DependentUpon>InstituteDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

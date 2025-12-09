@@ -38,9 +38,11 @@ namespace Project
         public virtual DbSet<LoginLog> LoginLogs { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
         public virtual DbSet<Opd> Opds { get; set; }
+        public virtual DbSet<OpdDetail> OpdDetails { get; set; }
         public virtual DbSet<Page> Pages { get; set; }
         public virtual DbSet<PageGroup> PageGroups { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
+        public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<RoleMenu> RoleMenus { get; set; }
         public virtual DbSet<ServiceCategory> ServiceCategories { get; set; }

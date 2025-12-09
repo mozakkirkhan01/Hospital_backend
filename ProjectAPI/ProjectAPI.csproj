@@ -257,7 +257,7 @@
     <Compile Include="Controllers\api\DistrictController.cs" />
     <Compile Include="Controllers\api\DoctorController.cs" />
     <Compile Include="Controllers\api\MenuController.cs" />
-    <Compile Include="Controllers\api\OpdBookingController.cs" />
+    <Compile Include="Controllers\api\OpdController.cs" />
     <Compile Include="Controllers\api\PageController.cs" />
     <Compile Include="Controllers\api\PageGroupController.cs" />
     <Compile Include="Controllers\api\PatientController.cs" />
