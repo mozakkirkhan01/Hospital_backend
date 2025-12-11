@@ -62,5 +62,49 @@ namespace ProjectAPI.Controllers.api
             }
             return response;
         }
+        [HttpPost]
+        [Route("OpdList")]
+        public ExpandoObject OpdList(RequestModel requestModel)
+        {
+
+            dynamic response = new ExpandoObject();
+            try
+            {
+                InstituteDbEntities dbContext = new InstituteDbEntities();
+                string AppKey = HttpContext.Current.Request.Headers["AppKey"];
+                AppData.CheckAppKey(dbContext, AppKey, (byte)KeyFor.Admin);
+                var decryptData = CryptoJs.Decrypt(requestModel.request, CryptoJs.key, CryptoJs.iv);
+                ServiceSubCategory model = JsonConvert.DeserializeObject<ServiceSubCategory>(decryptData);
+                var list = (from d1 in dbContext.Opds
+                            select new
+                            {
+                                d1.OpdId,
+                                d1.Patient.PatientName,
+                                d1.OpdNo,
+                                d1.TokenNo,
+                                d1.OpdDate,
+                                d1.OpdType,
+                                d1.LineTotal,
+                                d1.TotalDiscount,
+                                d1.GrandTotal,
+                                d1.CreatedBy,
+                                d1.CreatedOn,
+                                d1.UpdatedBy,
+                                d1.UpdatedOn,
+                                d1.PaymentId,
+                                d1.PaymentStatus,
+                                d1.Remarks
+
+                            }).ToList();
+
+                response.OpdList = list;
+                response.Message = ConstantData.SuccessMessage;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+            }
+            return response;
+        }
     }
 }
