@@ -30,6 +30,7 @@ namespace Project
         public int PaymentId { get; set; }
         public byte PaymentStatus { get; set; }
         public string Remarks { get; set; }
+        public Nullable<int> TotalQty { get; set; }
     
         public virtual Patient Patient { get; set; }
         public virtual Payment Payment { get; set; }
