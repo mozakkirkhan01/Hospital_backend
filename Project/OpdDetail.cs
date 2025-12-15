@@ -18,8 +18,8 @@ namespace Project
         public int OpdId { get; set; }
         public int ServiceChargeId { get; set; }
         public decimal ServiceChargeAmount { get; set; }
+        public int Quantity { get; set; }
         public Nullable<decimal> Discount { get; set; }
         public decimal Total { get; set; }
-        public byte Status { get; set; }
     }
 }
