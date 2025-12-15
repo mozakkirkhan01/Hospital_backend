@@ -175,6 +175,7 @@
           <Property Name="PaymentId" Type="int" Nullable="false" />
           <Property Name="PaymentStatus" Type="tinyint" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="250" />
+          <Property Name="TotalQty" Type="int" />
         </EntityType>
         <EntityType Name="OpdDetail">
           <Key>
@@ -184,9 +185,9 @@
           <Property Name="OpdId" Type="int" Nullable="false" />
           <Property Name="ServiceChargeId" Type="int" Nullable="false" />
           <Property Name="ServiceChargeAmount" Type="money" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="Discount" Type="money" />
           <Property Name="Total" Type="money" Nullable="false" />
-          <Property Name="Status" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Page">
           <Key>
@@ -241,6 +242,7 @@
           <Property Name="PaymentDate" Type="datetime" Nullable="false" />
           <Property Name="Amount" Type="money" Nullable="false" />
           <Property Name="PaymentMode" Type="tinyint" Nullable="false" />
+          <Property Name="PaymentType" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -1346,6 +1348,7 @@
           <Property Name="PaymentId" Type="Int32" Nullable="false" />
           <Property Name="PaymentStatus" Type="Byte" Nullable="false" />
           <Property Name="Remarks" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="TotalQty" Type="Int32" />
           <NavigationProperty Name="Patient" Relationship="InstituteDbModel.FK_Opd_Patient" FromRole="Opd" ToRole="Patient" />
           <NavigationProperty Name="Payment" Relationship="InstituteDbModel.FK_Opd_Payment" FromRole="Opd" ToRole="Payment" />
         </EntityType>
@@ -1357,9 +1360,9 @@
           <Property Name="OpdId" Type="Int32" Nullable="false" />
           <Property Name="ServiceChargeId" Type="Int32" Nullable="false" />
           <Property Name="ServiceChargeAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="Discount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Status" Type="Byte" Nullable="false" />
         </EntityType>
         <EntityType Name="Page">
           <Key>
@@ -1420,6 +1423,7 @@
           <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="PaymentMode" Type="Byte" Nullable="false" />
+          <Property Name="PaymentType" Type="Byte" Nullable="false" />
           <NavigationProperty Name="Opds" Relationship="InstituteDbModel.FK_Opd_Payment" FromRole="Payment" ToRole="Opd" />
         </EntityType>
         <EntityType Name="Role">
@@ -2198,6 +2202,7 @@
           <EntitySetMapping Name="Opds">
             <EntityTypeMapping TypeName="InstituteDbModel.Opd">
               <MappingFragment StoreEntitySet="Opd">
+                <ScalarProperty Name="TotalQty" ColumnName="TotalQty" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
                 <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
@@ -2220,9 +2225,9 @@
           <EntitySetMapping Name="OpdDetails">
             <EntityTypeMapping TypeName="InstituteDbModel.OpdDetail">
               <MappingFragment StoreEntitySet="OpdDetail">
-                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
                 <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="ServiceChargeAmount" ColumnName="ServiceChargeAmount" />
                 <ScalarProperty Name="ServiceChargeId" ColumnName="ServiceChargeId" />
                 <ScalarProperty Name="OpdId" ColumnName="OpdId" />
@@ -2281,6 +2286,7 @@
           <EntitySetMapping Name="Payments">
             <EntityTypeMapping TypeName="InstituteDbModel.Payment">
               <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
                 <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
