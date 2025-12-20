@@ -14,19 +14,13 @@ namespace Project
     
     public partial class Payment
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Payment()
-        {
-            this.Opds = new HashSet<Opd>();
-        }
-    
         public int PaymentId { get; set; }
+        public Nullable<int> OpdId { get; set; }
         public System.DateTime PaymentDate { get; set; }
         public decimal Amount { get; set; }
         public byte PaymentMode { get; set; }
         public byte PaymentType { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Opd> Opds { get; set; }
+        public virtual Opd Opd { get; set; }
     }
 }
