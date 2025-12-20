@@ -17,6 +17,7 @@ namespace Project
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ServiceCategory()
         {
+            this.OpdDetails = new HashSet<OpdDetail>();
             this.ServiceCharges = new HashSet<ServiceCharge>();
             this.ServiceSubCategories = new HashSet<ServiceSubCategory>();
         }
@@ -25,6 +26,8 @@ namespace Project
         public string ServiceCategoryName { get; set; }
         public byte Status { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OpdDetail> OpdDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ServiceCharge> ServiceCharges { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

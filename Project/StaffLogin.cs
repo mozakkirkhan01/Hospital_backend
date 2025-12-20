@@ -22,6 +22,8 @@ namespace Project
             this.Doctors = new HashSet<Doctor>();
             this.Doctors1 = new HashSet<Doctor>();
             this.Menus = new HashSet<Menu>();
+            this.Opds = new HashSet<Opd>();
+            this.Opds1 = new HashSet<Opd>();
             this.Pages = new HashSet<Page>();
             this.PageGroups = new HashSet<PageGroup>();
             this.Roles = new HashSet<Role>();
@@ -54,6 +56,10 @@ namespace Project
         public virtual ICollection<Doctor> Doctors1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Menu> Menus { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Opd> Opds { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Opd> Opds1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Page> Pages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
