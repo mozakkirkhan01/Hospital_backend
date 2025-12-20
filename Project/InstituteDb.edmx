@@ -161,7 +161,7 @@
           </Key>
           <Property Name="OpdId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PatientId" Type="int" Nullable="false" />
-          <Property Name="OpdNo" Type="int" Nullable="false" />
+          <Property Name="OpdNo" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="TokenNo" Type="int" Nullable="false" />
           <Property Name="OpdDate" Type="datetime" Nullable="false" />
           <Property Name="OpdType" Type="tinyint" Nullable="false" />
@@ -172,10 +172,11 @@
           <Property Name="CreatedOn" Type="date" Nullable="false" />
           <Property Name="UpdatedBy" Type="int" />
           <Property Name="UpdatedOn" Type="datetime" />
-          <Property Name="PaymentId" Type="int" Nullable="false" />
           <Property Name="PaymentStatus" Type="tinyint" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="250" />
           <Property Name="TotalQty" Type="int" />
+          <Property Name="TotalDuesAmount" Type="money" />
+          <Property Name="TotalPaidAmount" Type="money" />
         </EntityType>
         <EntityType Name="OpdDetail">
           <Key>
@@ -183,7 +184,8 @@
           </Key>
           <Property Name="OpdDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OpdId" Type="int" Nullable="false" />
-          <Property Name="ServiceChargeId" Type="int" Nullable="false" />
+          <Property Name="ServiceSubCategoryId" Type="int" Nullable="false" />
+          <Property Name="ServiceCategoryId" Type="int" Nullable="false" />
           <Property Name="ServiceChargeAmount" Type="money" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="Discount" Type="money" />
@@ -239,6 +241,7 @@
             <PropertyRef Name="PaymentId" />
           </Key>
           <Property Name="PaymentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OpdId" Type="int" />
           <Property Name="PaymentDate" Type="datetime" Nullable="false" />
           <Property Name="Amount" Type="money" Nullable="false" />
           <Property Name="PaymentMode" Type="tinyint" Nullable="false" />
@@ -550,15 +553,75 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Opd_Payment">
-          <End Role="Payment" Type="Self.Payment" Multiplicity="1" />
+        <Association Name="FK_Opd_StaffLogin">
+          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="1" />
           <End Role="Opd" Type="Self.Opd" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Payment">
-              <PropertyRef Name="PaymentId" />
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
             </Principal>
             <Dependent Role="Opd">
-              <PropertyRef Name="PaymentId" />
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Opd_StaffLogin1">
+          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
+          <End Role="Opd" Type="Self.Opd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
+            </Principal>
+            <Dependent Role="Opd">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OpdDetail_Opd">
+          <End Role="Opd" Type="Self.Opd" Multiplicity="1" />
+          <End Role="OpdDetail" Type="Self.OpdDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opd">
+              <PropertyRef Name="OpdId" />
+            </Principal>
+            <Dependent Role="OpdDetail">
+              <PropertyRef Name="OpdId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OpdDetail_OpdDetail">
+          <End Role="OpdDetail" Type="Self.OpdDetail" Multiplicity="1" />
+          <End Role="OpdDetail1" Type="Self.OpdDetail" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="OpdDetail">
+              <PropertyRef Name="OpdDetailId" />
+            </Principal>
+            <Dependent Role="OpdDetail1">
+              <PropertyRef Name="OpdDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OpdDetail_ServiceCategory">
+          <End Role="ServiceCategory" Type="Self.ServiceCategory" Multiplicity="1" />
+          <End Role="OpdDetail" Type="Self.OpdDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceCategory">
+              <PropertyRef Name="ServiceCategoryId" />
+            </Principal>
+            <Dependent Role="OpdDetail">
+              <PropertyRef Name="ServiceCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OpdDetail_ServiceSubCategory">
+          <End Role="ServiceSubCategory" Type="Self.ServiceSubCategory" Multiplicity="1" />
+          <End Role="OpdDetail" Type="Self.OpdDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceSubCategory">
+              <PropertyRef Name="ServiceSubCategoryId" />
+            </Principal>
+            <Dependent Role="OpdDetail">
+              <PropertyRef Name="ServiceSubCategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -597,6 +660,18 @@
             </Principal>
             <Dependent Role="PageGroup">
               <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_Opd">
+          <End Role="Opd" Type="Self.Opd" Multiplicity="0..1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opd">
+              <PropertyRef Name="OpdId" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="OpdId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -895,9 +970,29 @@
             <End Role="Patient" EntitySet="Patient" />
             <End Role="Opd" EntitySet="Opd" />
           </AssociationSet>
-          <AssociationSet Name="FK_Opd_Payment" Association="Self.FK_Opd_Payment">
-            <End Role="Payment" EntitySet="Payment" />
+          <AssociationSet Name="FK_Opd_StaffLogin" Association="Self.FK_Opd_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogin" />
             <End Role="Opd" EntitySet="Opd" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Opd_StaffLogin1" Association="Self.FK_Opd_StaffLogin1">
+            <End Role="StaffLogin" EntitySet="StaffLogin" />
+            <End Role="Opd" EntitySet="Opd" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OpdDetail_Opd" Association="Self.FK_OpdDetail_Opd">
+            <End Role="Opd" EntitySet="Opd" />
+            <End Role="OpdDetail" EntitySet="OpdDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OpdDetail_OpdDetail" Association="Self.FK_OpdDetail_OpdDetail">
+            <End Role="OpdDetail" EntitySet="OpdDetail" />
+            <End Role="OpdDetail1" EntitySet="OpdDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OpdDetail_ServiceCategory" Association="Self.FK_OpdDetail_ServiceCategory">
+            <End Role="ServiceCategory" EntitySet="ServiceCategory" />
+            <End Role="OpdDetail" EntitySet="OpdDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OpdDetail_ServiceSubCategory" Association="Self.FK_OpdDetail_ServiceSubCategory">
+            <End Role="ServiceSubCategory" EntitySet="ServiceSubCategory" />
+            <End Role="OpdDetail" EntitySet="OpdDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_Page_PageGroup" Association="Self.FK_Page_PageGroup">
             <End Role="PageGroup" EntitySet="PageGroup" />
@@ -910,6 +1005,10 @@
           <AssociationSet Name="FK_PageGroup_StaffLogin" Association="Self.FK_PageGroup_StaffLogin">
             <End Role="StaffLogin" EntitySet="StaffLogin" />
             <End Role="PageGroup" EntitySet="PageGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_Opd" Association="Self.FK_Payment_Opd">
+            <End Role="Opd" EntitySet="Opd" />
+            <End Role="Payment" EntitySet="Payment" />
           </AssociationSet>
           <AssociationSet Name="FK_Role_StaffLogin" Association="Self.FK_Role_StaffLogin">
             <End Role="StaffLogin" EntitySet="StaffLogin" />
@@ -1085,9 +1184,33 @@
             <End Role="Patient" EntitySet="Patients" />
             <End Role="Opd" EntitySet="Opds" />
           </AssociationSet>
-          <AssociationSet Name="FK_Opd_Payment" Association="InstituteDbModel.FK_Opd_Payment">
-            <End Role="Payment" EntitySet="Payments" />
+          <AssociationSet Name="FK_Opd_StaffLogin" Association="InstituteDbModel.FK_Opd_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
             <End Role="Opd" EntitySet="Opds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Opd_StaffLogin1" Association="InstituteDbModel.FK_Opd_StaffLogin1">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="Opd" EntitySet="Opds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OpdDetail_Opd" Association="InstituteDbModel.FK_OpdDetail_Opd">
+            <End Role="Opd" EntitySet="Opds" />
+            <End Role="OpdDetail" EntitySet="OpdDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_Opd" Association="InstituteDbModel.FK_Payment_Opd">
+            <End Role="Opd" EntitySet="Opds" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OpdDetail_OpdDetail" Association="InstituteDbModel.FK_OpdDetail_OpdDetail">
+            <End Role="OpdDetail" EntitySet="OpdDetails" />
+            <End Role="OpdDetail1" EntitySet="OpdDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OpdDetail_ServiceCategory" Association="InstituteDbModel.FK_OpdDetail_ServiceCategory">
+            <End Role="ServiceCategory" EntitySet="ServiceCategories" />
+            <End Role="OpdDetail" EntitySet="OpdDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OpdDetail_ServiceSubCategory" Association="InstituteDbModel.FK_OpdDetail_ServiceSubCategory">
+            <End Role="ServiceSubCategory" EntitySet="ServiceSubCategories" />
+            <End Role="OpdDetail" EntitySet="OpdDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_Page_PageGroup" Association="InstituteDbModel.FK_Page_PageGroup">
             <End Role="PageGroup" EntitySet="PageGroups" />
@@ -1334,7 +1457,7 @@
           </Key>
           <Property Name="OpdId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PatientId" Type="Int32" Nullable="false" />
-          <Property Name="OpdNo" Type="Int32" Nullable="false" />
+          <Property Name="OpdNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="TokenNo" Type="Int32" Nullable="false" />
           <Property Name="OpdDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="OpdType" Type="Byte" Nullable="false" />
@@ -1345,12 +1468,16 @@
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
-          <Property Name="PaymentId" Type="Int32" Nullable="false" />
           <Property Name="PaymentStatus" Type="Byte" Nullable="false" />
           <Property Name="Remarks" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="TotalQty" Type="Int32" />
+          <Property Name="TotalDuesAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="TotalPaidAmount" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="Patient" Relationship="InstituteDbModel.FK_Opd_Patient" FromRole="Opd" ToRole="Patient" />
-          <NavigationProperty Name="Payment" Relationship="InstituteDbModel.FK_Opd_Payment" FromRole="Opd" ToRole="Payment" />
+          <NavigationProperty Name="StaffLogin" Relationship="InstituteDbModel.FK_Opd_StaffLogin" FromRole="Opd" ToRole="StaffLogin" />
+          <NavigationProperty Name="StaffLogin1" Relationship="InstituteDbModel.FK_Opd_StaffLogin1" FromRole="Opd" ToRole="StaffLogin" />
+          <NavigationProperty Name="OpdDetails" Relationship="InstituteDbModel.FK_OpdDetail_Opd" FromRole="Opd" ToRole="OpdDetail" />
+          <NavigationProperty Name="Payments" Relationship="InstituteDbModel.FK_Payment_Opd" FromRole="Opd" ToRole="Payment" />
         </EntityType>
         <EntityType Name="OpdDetail">
           <Key>
@@ -1358,11 +1485,17 @@
           </Key>
           <Property Name="OpdDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="OpdId" Type="Int32" Nullable="false" />
-          <Property Name="ServiceChargeId" Type="Int32" Nullable="false" />
+          <Property Name="ServiceSubCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="ServiceCategoryId" Type="Int32" Nullable="false" />
           <Property Name="ServiceChargeAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="Discount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Opd" Relationship="InstituteDbModel.FK_OpdDetail_Opd" FromRole="OpdDetail" ToRole="Opd" />
+          <NavigationProperty Name="OpdDetail1" Relationship="InstituteDbModel.FK_OpdDetail_OpdDetail" FromRole="OpdDetail" ToRole="OpdDetail1" />
+          <NavigationProperty Name="OpdDetail2" Relationship="InstituteDbModel.FK_OpdDetail_OpdDetail" FromRole="OpdDetail1" ToRole="OpdDetail" />
+          <NavigationProperty Name="ServiceCategory" Relationship="InstituteDbModel.FK_OpdDetail_ServiceCategory" FromRole="OpdDetail" ToRole="ServiceCategory" />
+          <NavigationProperty Name="ServiceSubCategory" Relationship="InstituteDbModel.FK_OpdDetail_ServiceSubCategory" FromRole="OpdDetail" ToRole="ServiceSubCategory" />
         </EntityType>
         <EntityType Name="Page">
           <Key>
@@ -1420,11 +1553,12 @@
             <PropertyRef Name="PaymentId" />
           </Key>
           <Property Name="PaymentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OpdId" Type="Int32" />
           <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="PaymentMode" Type="Byte" Nullable="false" />
           <Property Name="PaymentType" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Opds" Relationship="InstituteDbModel.FK_Opd_Payment" FromRole="Payment" ToRole="Opd" />
+          <NavigationProperty Name="Opd" Relationship="InstituteDbModel.FK_Payment_Opd" FromRole="Payment" ToRole="Opd" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -1462,6 +1596,7 @@
           <Property Name="ServiceCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ServiceCategoryName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="OpdDetails" Relationship="InstituteDbModel.FK_OpdDetail_ServiceCategory" FromRole="ServiceCategory" ToRole="OpdDetail" />
           <NavigationProperty Name="ServiceCharges" Relationship="InstituteDbModel.FK_ServiceCharge_ServiceCategory" FromRole="ServiceCategory" ToRole="ServiceCharge" />
           <NavigationProperty Name="ServiceSubCategories" Relationship="InstituteDbModel.FK_ServiceSubCategory_ServiceSubCategory" FromRole="ServiceCategory" ToRole="ServiceSubCategory" />
         </EntityType>
@@ -1489,6 +1624,7 @@
           <Property Name="ServiceCategoryId" Type="Int32" Nullable="false" />
           <Property Name="ServiceSubCategoryName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="OpdDetails" Relationship="InstituteDbModel.FK_OpdDetail_ServiceSubCategory" FromRole="ServiceSubCategory" ToRole="OpdDetail" />
           <NavigationProperty Name="ServiceCategory" Relationship="InstituteDbModel.FK_ServiceSubCategory_ServiceSubCategory" FromRole="ServiceSubCategory" ToRole="ServiceCategory" />
           <NavigationProperty Name="ServiceCharges" Relationship="InstituteDbModel.FK_ServiceCharge_ServiceSubCategory" FromRole="ServiceSubCategory" ToRole="ServiceCharge" />
         </EntityType>
@@ -1543,6 +1679,8 @@
           <NavigationProperty Name="Doctors" Relationship="InstituteDbModel.FK_Doctor_StaffLogin" FromRole="StaffLogin" ToRole="Doctor" />
           <NavigationProperty Name="Doctors1" Relationship="InstituteDbModel.FK_Doctor_StaffLogin1" FromRole="StaffLogin" ToRole="Doctor" />
           <NavigationProperty Name="Menus" Relationship="InstituteDbModel.FK_Menu_StaffLogin" FromRole="StaffLogin" ToRole="Menu" />
+          <NavigationProperty Name="Opds" Relationship="InstituteDbModel.FK_Opd_StaffLogin" FromRole="StaffLogin" ToRole="Opd" />
+          <NavigationProperty Name="Opds1" Relationship="InstituteDbModel.FK_Opd_StaffLogin1" FromRole="StaffLogin" ToRole="Opd" />
           <NavigationProperty Name="Pages" Relationship="InstituteDbModel.FK_Page_StaffLogin" FromRole="StaffLogin" ToRole="Page" />
           <NavigationProperty Name="PageGroups" Relationship="InstituteDbModel.FK_PageGroup_StaffLogin" FromRole="StaffLogin" ToRole="PageGroup" />
           <NavigationProperty Name="Roles" Relationship="InstituteDbModel.FK_Role_StaffLogin" FromRole="StaffLogin" ToRole="Role" />
@@ -1813,15 +1951,87 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Opd_Payment">
-          <End Type="InstituteDbModel.Payment" Role="Payment" Multiplicity="1" />
+        <Association Name="FK_Opd_StaffLogin">
+          <End Type="InstituteDbModel.StaffLogin" Role="StaffLogin" Multiplicity="1" />
           <End Type="InstituteDbModel.Opd" Role="Opd" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Payment">
-              <PropertyRef Name="PaymentId" />
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
             </Principal>
             <Dependent Role="Opd">
-              <PropertyRef Name="PaymentId" />
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Opd_StaffLogin1">
+          <End Type="InstituteDbModel.StaffLogin" Role="StaffLogin" Multiplicity="0..1" />
+          <End Type="InstituteDbModel.Opd" Role="Opd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
+            </Principal>
+            <Dependent Role="Opd">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OpdDetail_Opd">
+          <End Type="InstituteDbModel.Opd" Role="Opd" Multiplicity="1" />
+          <End Type="InstituteDbModel.OpdDetail" Role="OpdDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opd">
+              <PropertyRef Name="OpdId" />
+            </Principal>
+            <Dependent Role="OpdDetail">
+              <PropertyRef Name="OpdId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_Opd">
+          <End Type="InstituteDbModel.Opd" Role="Opd" Multiplicity="0..1" />
+          <End Type="InstituteDbModel.Payment" Role="Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opd">
+              <PropertyRef Name="OpdId" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="OpdId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OpdDetail_OpdDetail">
+          <End Type="InstituteDbModel.OpdDetail" Role="OpdDetail" Multiplicity="1" />
+          <End Type="InstituteDbModel.OpdDetail" Role="OpdDetail1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="OpdDetail">
+              <PropertyRef Name="OpdDetailId" />
+            </Principal>
+            <Dependent Role="OpdDetail1">
+              <PropertyRef Name="OpdDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OpdDetail_ServiceCategory">
+          <End Type="InstituteDbModel.ServiceCategory" Role="ServiceCategory" Multiplicity="1" />
+          <End Type="InstituteDbModel.OpdDetail" Role="OpdDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceCategory">
+              <PropertyRef Name="ServiceCategoryId" />
+            </Principal>
+            <Dependent Role="OpdDetail">
+              <PropertyRef Name="ServiceCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OpdDetail_ServiceSubCategory">
+          <End Type="InstituteDbModel.ServiceSubCategory" Role="ServiceSubCategory" Multiplicity="1" />
+          <End Type="InstituteDbModel.OpdDetail" Role="OpdDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceSubCategory">
+              <PropertyRef Name="ServiceSubCategoryId" />
+            </Principal>
+            <Dependent Role="OpdDetail">
+              <PropertyRef Name="ServiceSubCategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2202,10 +2412,11 @@
           <EntitySetMapping Name="Opds">
             <EntityTypeMapping TypeName="InstituteDbModel.Opd">
               <MappingFragment StoreEntitySet="Opd">
+                <ScalarProperty Name="TotalPaidAmount" ColumnName="TotalPaidAmount" />
+                <ScalarProperty Name="TotalDuesAmount" ColumnName="TotalDuesAmount" />
                 <ScalarProperty Name="TotalQty" ColumnName="TotalQty" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
-                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
@@ -2229,7 +2440,8 @@
                 <ScalarProperty Name="Discount" ColumnName="Discount" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="ServiceChargeAmount" ColumnName="ServiceChargeAmount" />
-                <ScalarProperty Name="ServiceChargeId" ColumnName="ServiceChargeId" />
+                <ScalarProperty Name="ServiceCategoryId" ColumnName="ServiceCategoryId" />
+                <ScalarProperty Name="ServiceSubCategoryId" ColumnName="ServiceSubCategoryId" />
                 <ScalarProperty Name="OpdId" ColumnName="OpdId" />
                 <ScalarProperty Name="OpdDetailId" ColumnName="OpdDetailId" />
               </MappingFragment>
@@ -2290,6 +2502,7 @@
                 <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="OpdId" ColumnName="OpdId" />
                 <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
               </MappingFragment>
             </EntityTypeMapping>
