@@ -16,10 +16,17 @@ namespace Project
     {
         public int OpdDetailId { get; set; }
         public int OpdId { get; set; }
-        public int ServiceChargeId { get; set; }
+        public int ServiceSubCategoryId { get; set; }
+        public int ServiceCategoryId { get; set; }
         public decimal ServiceChargeAmount { get; set; }
         public int Quantity { get; set; }
         public Nullable<decimal> Discount { get; set; }
         public decimal Total { get; set; }
+    
+        public virtual Opd Opd { get; set; }
+        public virtual OpdDetail OpdDetail1 { get; set; }
+        public virtual OpdDetail OpdDetail2 { get; set; }
+        public virtual ServiceCategory ServiceCategory { get; set; }
+        public virtual ServiceSubCategory ServiceSubCategory { get; set; }
     }
 }
