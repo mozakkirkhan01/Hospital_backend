@@ -14,9 +14,16 @@ namespace Project
     
     public partial class Opd
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Opd()
+        {
+            this.OpdDetails = new HashSet<OpdDetail>();
+            this.Payments = new HashSet<Payment>();
+        }
+    
         public int OpdId { get; set; }
         public int PatientId { get; set; }
-        public int OpdNo { get; set; }
+        public string OpdNo { get; set; }
         public int TokenNo { get; set; }
         public System.DateTime OpdDate { get; set; }
         public byte OpdType { get; set; }
@@ -27,12 +34,18 @@ namespace Project
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
-        public int PaymentId { get; set; }
         public byte PaymentStatus { get; set; }
         public string Remarks { get; set; }
         public Nullable<int> TotalQty { get; set; }
+        public Nullable<decimal> TotalDuesAmount { get; set; }
+        public Nullable<decimal> TotalPaidAmount { get; set; }
     
         public virtual Patient Patient { get; set; }
-        public virtual Payment Payment { get; set; }
+        public virtual StaffLogin StaffLogin { get; set; }
+        public virtual StaffLogin StaffLogin1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OpdDetail> OpdDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Payment> Payments { get; set; }
     }
 }
