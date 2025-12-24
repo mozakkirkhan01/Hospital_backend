@@ -90,7 +90,7 @@ namespace ProjectAPI.Controllers.api
         [HttpPost]
         [Route("patientList")]
         public ExpandoObject PatientList(RequestModel requestModel)
-        {
+       {
 
             dynamic response = new ExpandoObject();
             try
