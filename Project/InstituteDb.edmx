@@ -172,11 +172,15 @@
           <Property Name="CreatedOn" Type="date" Nullable="false" />
           <Property Name="UpdatedBy" Type="int" />
           <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="BillStatus" Type="tinyint" Nullable="false" />
           <Property Name="PaymentStatus" Type="tinyint" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="250" />
           <Property Name="TotalQty" Type="int" />
           <Property Name="TotalDuesAmount" Type="money" />
           <Property Name="TotalPaidAmount" Type="money" />
+          <Property Name="CancelReason" Type="nvarchar" MaxLength="450" />
+          <Property Name="OpdCancelDate" Type="date" />
+          <Property Name="OpdStatus" Type="tinyint" />
         </EntityType>
         <EntityType Name="OpdDetail">
           <Key>
@@ -1468,11 +1472,15 @@
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="BillStatus" Type="Byte" Nullable="false" />
           <Property Name="PaymentStatus" Type="Byte" Nullable="false" />
           <Property Name="Remarks" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="TotalQty" Type="Int32" />
           <Property Name="TotalDuesAmount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="TotalPaidAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CancelReason" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="OpdCancelDate" Type="DateTime" Precision="0" />
+          <Property Name="OpdStatus" Type="Byte" />
           <NavigationProperty Name="Patient" Relationship="InstituteDbModel.FK_Opd_Patient" FromRole="Opd" ToRole="Patient" />
           <NavigationProperty Name="StaffLogin" Relationship="InstituteDbModel.FK_Opd_StaffLogin" FromRole="Opd" ToRole="StaffLogin" />
           <NavigationProperty Name="StaffLogin1" Relationship="InstituteDbModel.FK_Opd_StaffLogin1" FromRole="Opd" ToRole="StaffLogin" />
@@ -2412,11 +2420,15 @@
           <EntitySetMapping Name="Opds">
             <EntityTypeMapping TypeName="InstituteDbModel.Opd">
               <MappingFragment StoreEntitySet="Opd">
+                <ScalarProperty Name="OpdStatus" ColumnName="OpdStatus" />
+                <ScalarProperty Name="OpdCancelDate" ColumnName="OpdCancelDate" />
+                <ScalarProperty Name="CancelReason" ColumnName="CancelReason" />
                 <ScalarProperty Name="TotalPaidAmount" ColumnName="TotalPaidAmount" />
                 <ScalarProperty Name="TotalDuesAmount" ColumnName="TotalDuesAmount" />
                 <ScalarProperty Name="TotalQty" ColumnName="TotalQty" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+                <ScalarProperty Name="BillStatus" ColumnName="BillStatus" />
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
