@@ -34,11 +34,15 @@ namespace Project
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
+        public byte BillStatus { get; set; }
         public byte PaymentStatus { get; set; }
         public string Remarks { get; set; }
         public Nullable<int> TotalQty { get; set; }
         public Nullable<decimal> TotalDuesAmount { get; set; }
         public Nullable<decimal> TotalPaidAmount { get; set; }
+        public string CancelReason { get; set; }
+        public Nullable<System.DateTime> OpdCancelDate { get; set; }
+        public Nullable<byte> OpdStatus { get; set; }
     
         public virtual Patient Patient { get; set; }
         public virtual StaffLogin StaffLogin { get; set; }
