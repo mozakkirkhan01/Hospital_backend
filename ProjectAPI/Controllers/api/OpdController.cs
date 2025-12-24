@@ -6,6 +6,9 @@ using System.Dynamic;
 using System.Web;
 using Newtonsoft.Json;
 using Project;
+
+
+
 namespace ProjectAPI.Controllers.api
 
 {
@@ -42,6 +45,14 @@ namespace ProjectAPI.Controllers.api
         }
 
 
+        public class CancelOpdModel
+        {
+            public int OpdId { get; set; }
+            public string CancelReason { get; set; }
+            public DateTime OpdCancelDate { get; set; }
+            public int BillStatus { get; set; } // 2 = Cancelled
+            public int UpdatedBy { get; set; }
+        }
 
         public class OpdModel
         {
@@ -84,9 +95,16 @@ namespace ProjectAPI.Controllers.api
                             Opd.TotalDiscount = model.GetOpd.TotalDiscount;
                             Opd.GrandTotal = model.GetOpd.GrandTotal;
                             Opd.PaymentStatus = model.GetOpd.PaymentStatus;
+                            Opd.TotalDuesAmount = model.GetOpd.TotalDuesAmount;
+                        if (Opd.TotalDuesAmount == 0)
+                            Opd.PaymentStatus = 1;
+                        else
+                            Opd.PaymentStatus = 2;
+                        // ✅ Payment Status
+                        //Opd.PaymentStatus = Opd.TotalDuesAmount <= 0 ? 1 : 2;
+                            Opd.BillStatus = 1;
                             Opd.Remarks = model.GetOpd.Remarks;
                             Opd.TotalQty = model.GetOpd.TotalQty;
-                            Opd.TotalDuesAmount = model.GetOpd.TotalDuesAmount;
                             Opd.TotalPaidAmount = model.GetOpd.TotalPaidAmount;
                             Opd.UpdatedBy = model.GetOpd.UpdatedBy;
                             Opd.UpdatedOn = DateTime.Now;
@@ -103,10 +121,16 @@ namespace ProjectAPI.Controllers.api
                             Opd.LineTotal = model.GetOpd.LineTotal;
                             Opd.TotalDiscount = model.GetOpd.TotalDiscount;
                             Opd.GrandTotal = model.GetOpd.GrandTotal;
-                            Opd.PaymentStatus = model.GetOpd.PaymentStatus;
+                            Opd.TotalDuesAmount = model.GetOpd.TotalDuesAmount;
+                        if (Opd.TotalDuesAmount == 0)
+                            Opd.PaymentStatus = 1;
+                        else
+                        {
+                            Opd.PaymentStatus = 2;
+                        }
+                            Opd.BillStatus = 1;
                             Opd.Remarks = model.GetOpd.Remarks;
                             Opd.TotalQty = model.GetOpd.TotalQty;
-                            Opd.TotalDuesAmount = model.GetOpd.TotalDuesAmount;
                             Opd.TotalPaidAmount = model.GetOpd.TotalPaidAmount;
                             Opd.CreatedBy = model.GetOpd.CreatedBy;
                             Opd.CreatedOn = DateTime.Now;
@@ -193,50 +217,112 @@ namespace ProjectAPI.Controllers.api
                 }
                 return response;
             }
+        
+    [HttpPost]
+    [Route("OpdList")]
+    public ExpandoObject OpdList(RequestModel requestModel)
+    {
+
+        dynamic response = new ExpandoObject();
+        try
+        {
+            InstituteDbEntities dbContext = new InstituteDbEntities();
+            string AppKey = HttpContext.Current.Request.Headers["AppKey"];
+            AppData.CheckAppKey(dbContext, AppKey, (byte)KeyFor.Admin);
+            var decryptData = CryptoJs.Decrypt(requestModel.request, CryptoJs.key, CryptoJs.iv);
+            ServiceSubCategory model = JsonConvert.DeserializeObject<ServiceSubCategory>(decryptData);
+            var list = (from d1 in dbContext.Opds
+                        join p1 in dbContext.Payments
+                        on d1.OpdId equals p1.OpdId
+                        into paymentGroup
+                        from p in paymentGroup.DefaultIfEmpty()   // LEFT JOIN
+                        select new
+                        {
+                            d1.OpdId,   
+                            d1.OpdNo,
+                            d1.OpdDate,
+                            d1.Patient.UHIDNo,
+                            d1.Patient.PatientName,
+                            d1.Patient.MobileNo,
+                            d1.TokenNo,
+                            d1.LineTotal,
+                            d1.TotalDiscount,
+                            d1.GrandTotal,
+                            d1.TotalPaidAmount,
+                            d1.TotalDuesAmount,
+                            p.PaymentMode,
+                            p.PaymentType,
+                            d1.CreatedBy,
+                            d1.CreatedOn,
+                            d1.UpdatedBy,
+                            d1.UpdatedOn,
+                            d1.PaymentStatus,
+                            d1.Remarks,
+                            d1.BillStatus
+
+                        }).ToList();
+
+            response.OpdList = list;
+            response.Message = ConstantData.SuccessMessage;
         }
-        //[HttpPost]
-        //[Route("OpdList")]
-        //public ExpandoObject OpdList(RequestModel requestModel)
-        //{
-
-        //    dynamic response = new ExpandoObject();
-        //    try
-        //    {
-        //        InstituteDbEntities dbContext = new InstituteDbEntities();
-        //        string AppKey = HttpContext.Current.Request.Headers["AppKey"];
-        //        AppData.CheckAppKey(dbContext, AppKey, (byte)KeyFor.Admin);
-        //        var decryptData = CryptoJs.Decrypt(requestModel.request, CryptoJs.key, CryptoJs.iv);
-        //        ServiceSubCategory model = JsonConvert.DeserializeObject<ServiceSubCategory>(decryptData);
-        //        var list = (from d1 in dbContext.Opds
-        //                    select new
-        //                    {
-        //                        d1.OpdId,
-        //                        d1.Patient.PatientName,
-        //                        d1.OpdNo,
-        //                        d1.TokenNo,
-        //                        d1.OpdDate,
-        //                        d1.OpdType,
-        //                        d1.LineTotal,
-        //                        d1.TotalDiscount,
-        //                        d1.GrandTotal,
-        //                        d1.CreatedBy,
-        //                        d1.CreatedOn,
-        //                        d1.UpdatedBy,
-        //                        d1.UpdatedOn,
-        //                        d1.PaymentId,
-        //                        d1.PaymentStatus,
-        //                        d1.Remarks
-
-        //                    }).ToList();
-
-        //        response.OpdList = list;
-        //        response.Message = ConstantData.SuccessMessage;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        response.Message = ex.Message;
-        //    }
-        //    return response;
-        //}
+        catch (Exception ex)
+        {
+            response.Message = ex.Message;
+        }
+        return response;
     }
+
+        [HttpPost]
+        [Route("CancelOpd")]
+        public ExpandoObject CancelOpd(RequestModel requestModel)
+        {
+            dynamic response = new ExpandoObject();
+
+            try
+            {
+                InstituteDbEntities dbContext = new InstituteDbEntities();
+
+                string AppKey = HttpContext.Current.Request.Headers["AppKey"];
+                AppData.CheckAppKey(dbContext, AppKey, (byte)KeyFor.Admin);
+
+                var decryptData = CryptoJs.Decrypt(
+                    requestModel.request,
+                    CryptoJs.key,
+                    CryptoJs.iv
+                );
+
+                CancelOpdModel model =
+                    JsonConvert.DeserializeObject<CancelOpdModel>(decryptData);
+
+                var opd = dbContext.Opds
+                    .FirstOrDefault(x => x.OpdId == model.OpdId);
+
+                if (opd == null)
+                {
+                    response.Message = "OPD not found";
+                    return response;
+                }
+
+                // ✅ Update cancellation info
+                opd.BillStatus = (byte)model.BillStatus;                // 2 = Cancelled
+                opd.CancelReason = model.CancelReason;
+                opd.OpdCancelDate = model.OpdCancelDate;
+                opd.UpdatedBy = model.UpdatedBy;
+                opd.UpdatedOn = DateTime.Now;
+
+                dbContext.SaveChanges();
+
+                response.Message = ConstantData.SuccessMessage;
+                response.OpdId = opd.OpdId;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
+
+    }
+}
 

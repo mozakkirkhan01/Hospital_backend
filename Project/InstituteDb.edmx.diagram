@@ -8,30 +8,30 @@
         <EntityTypeShape EntityType="InstituteDbModel.App" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="InstituteDbModel.Backup" Width="1.5" PointX="8.25" PointY="15.375" />
         <EntityTypeShape EntityType="InstituteDbModel.BedType" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="InstituteDbModel.City" Width="1.5" PointX="12.75" PointY="22.625" />
-        <EntityTypeShape EntityType="InstituteDbModel.Company" Width="1.5" PointX="10.5" PointY="31.625" />
-        <EntityTypeShape EntityType="InstituteDbModel.Database" Width="1.5" PointX="8.25" PointY="33.75" />
+        <EntityTypeShape EntityType="InstituteDbModel.City" Width="1.5" PointX="12.75" PointY="26.125" />
+        <EntityTypeShape EntityType="InstituteDbModel.Company" Width="1.5" PointX="10.5" PointY="50.5" />
+        <EntityTypeShape EntityType="InstituteDbModel.Database" Width="1.5" PointX="8.25" PointY="18.625" />
         <EntityTypeShape EntityType="InstituteDbModel.Department" Width="1.5" PointX="0.75" PointY="25" />
         <EntityTypeShape EntityType="InstituteDbModel.Designation" Width="1.5" PointX="3.75" PointY="20" />
-        <EntityTypeShape EntityType="InstituteDbModel.District" Width="1.5" PointX="12.75" PointY="19.125" />
+        <EntityTypeShape EntityType="InstituteDbModel.District" Width="1.5" PointX="12.75" PointY="22.625" />
         <EntityTypeShape EntityType="InstituteDbModel.Doctor" Width="1.5" PointX="3" PointY="23.5" />
         <EntityTypeShape EntityType="InstituteDbModel.LoginLog" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="InstituteDbModel.Menu" Width="1.5" PointX="13.5" PointY="26" />
-        <EntityTypeShape EntityType="InstituteDbModel.Opd" Width="1.5" PointX="10.5" PointY="23.125" />
-        <EntityTypeShape EntityType="InstituteDbModel.OpdDetail" Width="1.5" PointX="15.75" PointY="24.125" />
-        <EntityTypeShape EntityType="InstituteDbModel.Page" Width="1.5" PointX="12.75" PointY="36.125" />
-        <EntityTypeShape EntityType="InstituteDbModel.PageGroup" Width="1.5" PointX="10.5" PointY="48.375" />
-        <EntityTypeShape EntityType="InstituteDbModel.Patient" Width="1.5" PointX="8.25" PointY="9.5" />
-        <EntityTypeShape EntityType="InstituteDbModel.Payment" Width="1.5" PointX="12.75" PointY="39.875" />
-        <EntityTypeShape EntityType="InstituteDbModel.Role" Width="1.5" PointX="10.5" PointY="41.375" />
-        <EntityTypeShape EntityType="InstituteDbModel.RoleMenu" Width="1.5" PointX="15.75" PointY="31.625" />
-        <EntityTypeShape EntityType="InstituteDbModel.ServiceCategory" Width="1.5" PointX="13.5" PointY="11.375" />
-        <EntityTypeShape EntityType="InstituteDbModel.ServiceCharge" Width="1.5" PointX="15.75" PointY="12.875" />
-        <EntityTypeShape EntityType="InstituteDbModel.ServiceSubCategory" Width="1.5" PointX="13.5" PointY="15.25" />
+        <EntityTypeShape EntityType="InstituteDbModel.Menu" Width="1.5" PointX="10.5" PointY="27.5" />
+        <EntityTypeShape EntityType="InstituteDbModel.Opd" Width="1.5" PointX="13.5" PointY="30.25" />
+        <EntityTypeShape EntityType="InstituteDbModel.OpdDetail" Width="1.5" PointX="18.75" PointY="31.625" />
+        <EntityTypeShape EntityType="InstituteDbModel.Page" Width="1.5" PointX="12.75" PointY="37.375" />
+        <EntityTypeShape EntityType="InstituteDbModel.PageGroup" Width="1.5" PointX="10.5" PointY="47.375" />
+        <EntityTypeShape EntityType="InstituteDbModel.Patient" Width="1.5" PointX="11.25" PointY="16" />
+        <EntityTypeShape EntityType="InstituteDbModel.Payment" Width="1.5" PointX="15.75" PointY="38.375" />
+        <EntityTypeShape EntityType="InstituteDbModel.Role" Width="1.5" PointX="10.5" PointY="44.125" />
+        <EntityTypeShape EntityType="InstituteDbModel.RoleMenu" Width="1.5" PointX="15.75" PointY="30.75" />
+        <EntityTypeShape EntityType="InstituteDbModel.ServiceCategory" Width="1.5" PointX="16.5" PointY="41.875" />
+        <EntityTypeShape EntityType="InstituteDbModel.ServiceCharge" Width="1.5" PointX="18.75" PointY="36.75" />
+        <EntityTypeShape EntityType="InstituteDbModel.ServiceSubCategory" Width="1.5" PointX="16.5" PointY="26.75" />
         <EntityTypeShape EntityType="InstituteDbModel.Staff" Width="1.5" PointX="6" PointY="22.75" />
-        <EntityTypeShape EntityType="InstituteDbModel.StaffLogin" Width="1.5" PointX="8.25" PointY="22.5" />
-        <EntityTypeShape EntityType="InstituteDbModel.StaffLoginRole" Width="1.5" PointX="12.75" PointY="32" />
-        <EntityTypeShape EntityType="InstituteDbModel.State" Width="1.5" PointX="10.5" PointY="18.625" />
+        <EntityTypeShape EntityType="InstituteDbModel.StaffLogin" Width="1.5" PointX="8.25" PointY="26" />
+        <EntityTypeShape EntityType="InstituteDbModel.StaffLoginRole" Width="1.5" PointX="15.75" PointY="35" />
+        <EntityTypeShape EntityType="InstituteDbModel.State" Width="1.5" PointX="10.5" PointY="22.125" />
         <EntityTypeShape EntityType="InstituteDbModel.StateMaster" Width="1.5" PointX="2.75" PointY="3.75" />
         <AssociationConnector Association="InstituteDbModel.FK_Backup_Staff" />
         <AssociationConnector Association="InstituteDbModel.FK_City_StaffLogin" />
