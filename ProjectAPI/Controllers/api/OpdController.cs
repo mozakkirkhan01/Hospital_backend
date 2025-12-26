@@ -218,6 +218,9 @@ namespace ProjectAPI.Controllers.api
             return response;
         }
 
+
+
+
         [HttpPost]
         [Route("OpdList")]
         public ExpandoObject OpdList(RequestModel requestModel)
@@ -259,7 +262,7 @@ namespace ProjectAPI.Controllers.api
                                 d1.PaymentStatus,
                                 d1.Remarks,
                                 d1.BillStatus,
-                                d1.OpdType
+                                d1.OpdType,
 
                             }).ToList();
 
@@ -272,6 +275,9 @@ namespace ProjectAPI.Controllers.api
             }
             return response;
         }
+
+
+
         [HttpPost]
         [Route("OpdDetailList")]
         public ExpandoObject OpdDetailList(RequestModel requestModel)
@@ -327,39 +333,107 @@ namespace ProjectAPI.Controllers.api
             return response;
         }
 
-        //[HttpPost]
-        //[Route("getOpdFullDetails")]
-        //public ExpandoObject GetOpdFullDetails(RequestModel requestModel)
-        //{
-        //    dynamic response = new ExpandoObject();
-        //    try
-        //    {
 
-        //    InstituteDbEntities dbContext = new InstituteDbEntities();
-        //    string AppKey = HttpContext.Current.Request.Headers["AppKey"];
-        //    AppData.CheckAppKey(dbContext, AppKey, (byte)KeyFor.Admin);
-        //    var data = JsonConvert.DeserializeObject<dynamic>(CryptoJs.Decrypt(requestModel.request, CryptoJs.key, CryptoJs.iv)
-        //    );
 
-        //    int opdId = data.OpdId;
 
-        //    response.ServiceList = dbContext.OpdDetails
-        //        .Where(x => x.OpdId == opdId)
-        //        .ToList();
+        [HttpPost]
+        [Route("opdDetailById")]
+        public ExpandoObject opdDetailById(RequestModel requestModel)
+        {
+            dynamic response = new ExpandoObject();
 
-        //    response.PaymentList = dbContext.Payments
-        //        .Where(x => x.OpdId == opdId)
-        //        .ToList();
+            try
+            {
+                InstituteDbEntities dbContext = new InstituteDbEntities();
 
-        //    response.Message = ConstantData.SuccessMessage;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        response.Message = ex.Message;
-        //    }
-        //    return response;
-        //}
+                string AppKey = HttpContext.Current.Request.Headers["AppKey"];
+                AppData.CheckAppKey(dbContext, AppKey, (byte)KeyFor.Admin);
 
+                var decryptData = CryptoJs.Decrypt(
+                    requestModel.request,
+                    CryptoJs.key,
+                    CryptoJs.iv
+                );
+
+                int opdId = JsonConvert.DeserializeObject<int>(decryptData);
+
+                /* ---------------- OPD + PATIENT ---------------- */
+                var opd = (from o in dbContext.Opds
+                           where o.OpdId == opdId
+                           select new
+                           {
+                               o.OpdId,
+                               o.PatientId,
+                               o.OpdNo,
+                               o.OpdDate,
+                               o.OpdType,
+                               o.LineTotal,
+                               o.TotalDiscount,
+                               o.GrandTotal,
+                               o.TotalPaidAmount,
+                               o.TotalDuesAmount,
+                               o.PaymentStatus,
+                               o.BillStatus,
+                               o.Remarks,
+
+                               o.Patient.UHIDNo,
+                               o.Patient.PatientName,
+                               o.Patient.Age,
+                               o.Patient.MobileNo,
+                               o.Patient.Address,
+                               o.Patient.AadharNo,
+                               o.Patient.BloodGroup
+                           }).FirstOrDefault();
+
+                if (opd == null)
+                {
+                    response.Message = "OPD not found";
+                    return response;
+                }
+
+                /* ---------------- OPD SERVICES ---------------- */
+                var opdDetails = (from d in dbContext.OpdDetails
+                                  where d.OpdId == opdId
+                                  select new
+                                  {
+                                      d.OpdDetailId,
+                                      d.OpdId,
+                                      d.ServiceCategoryId,
+                                      d.ServiceCategory.ServiceCategoryName,
+                                      d.ServiceSubCategoryId,
+                                      d.ServiceSubCategory.ServiceSubCategoryName,
+                                      d.ServiceChargeAmount,
+                                      d.Quantity,
+                                      d.Discount,
+                                      d.Total
+                                  }).ToList();
+
+                /* ---------------- PAYMENTS ---------------- */
+                var payments = (from p in dbContext.Payments
+                                where p.OpdId == opdId
+                                select new
+                                {
+                                    p.PaymentId,
+                                    p.OpdId,
+                                    p.Amount,
+                                    p.PaymentMode,
+                                    p.PaymentType,
+                                    p.PaymentDate,
+                                }).ToList();
+
+                /* ---------------- RESPONSE ---------------- */
+                response.Opd = opd;
+                response.OpdDetailList = opdDetails;
+                response.PaymentList = payments;
+                response.Message = ConstantData.SuccessMessage;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
 
         [HttpPost]
         [Route("CancelOpd")]
