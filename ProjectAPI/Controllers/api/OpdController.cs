@@ -291,31 +291,63 @@ namespace ProjectAPI.Controllers.api
                 AppData.CheckAppKey(dbContext, AppKey, (byte)KeyFor.Admin);
                 var decryptData = CryptoJs.Decrypt(requestModel.request, CryptoJs.key, CryptoJs.iv);
                 OpdDetail model = JsonConvert.DeserializeObject<OpdDetail>(decryptData);
-                var list = (from d1 in dbContext.Opds
-                            join p1 in dbContext.OpdDetails
-                            on d1.OpdId equals p1.OpdId
-                            into DetailGroup
-                            from p in DetailGroup.DefaultIfEmpty()   // LEFT JOIN
-                            join pay in dbContext.Payments
-                            on d1.OpdId equals pay.OpdId
+
+                int opdId = model.OpdId;
+                                    var list = (
+                        from d in dbContext.Opds
+                        where d.OpdId == opdId          // ✅ FILTER HERE
+                        join od in dbContext.OpdDetails
+                            on d.OpdId equals od.OpdId
+                            into opdDetailGroup
+                        from od in opdDetailGroup.DefaultIfEmpty()   // LEFT JOIN
+                        join pay in dbContext.Payments
+                            on d.OpdId equals pay.OpdId
                             into paymentGroup
-                            from payment in paymentGroup.DefaultIfEmpty()
-                            select new
-                            {
-                                p.OpdDetailId,
-                                p.ServiceCategory.ServiceCategoryName,
-                                p.ServiceSubCategory.ServiceSubCategoryName,
-                                p.OpdId,
-                                p.ServiceSubCategoryId,
-                                p.ServiceCategoryId,
-                                p.ServiceChargeAmount,
-                                p.Quantity,
-                                p.Discount,
-                                p.Total,
-                                payment.PaymentDate,
-                                payment.Amount,
-                                payment.PaymentMode,
-                                payment.PaymentType,
+                        from pay in paymentGroup.DefaultIfEmpty()    // LEFT JOIN
+                        select new
+                        {
+                            od.OpdDetailId,
+                            od.OpdId,
+                            od.ServiceCategoryId,
+                            od.ServiceSubCategoryId,
+                            ServiceCategoryName = od.ServiceCategory.ServiceCategoryName,
+                            ServiceSubCategoryName = od.ServiceSubCategory.ServiceSubCategoryName,
+                            od.ServiceChargeAmount,
+                            od.Quantity,
+                            od.Discount,
+                            od.Total,
+
+                            pay.PaymentDate,
+                            pay.Amount,
+                            pay.PaymentMode,
+                            pay.PaymentType
+
+
+                //var list = (from d1 in dbContext.Opds
+                //            join p1 in dbContext.OpdDetails
+                //            on d1.OpdId equals p1.OpdId
+                //            into DetailGroup
+                //            from p in DetailGroup.DefaultIfEmpty()   // LEFT JOIN
+                //            join pay in dbContext.Payments
+                //            on d1.OpdId equals pay.OpdId
+                //            into paymentGroup
+                //            from payment in paymentGroup.DefaultIfEmpty()
+                //            select new
+                //            {
+                //                p.OpdDetailId,
+                //                p.ServiceCategory.ServiceCategoryName,
+                //                p.ServiceSubCategory.ServiceSubCategoryName,
+                //                p.OpdId,
+                //                p.ServiceSubCategoryId,
+                //                p.ServiceCategoryId,
+                //                p.ServiceChargeAmount,
+                //                p.Quantity,
+                //                p.Discount,
+                //                p.Total,
+                //                payment.PaymentDate,
+                //                payment.Amount,
+                //                payment.PaymentMode,
+                //                payment.PaymentType,
                                 
 
 
